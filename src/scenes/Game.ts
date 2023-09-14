@@ -33,7 +33,7 @@ export default class Demo extends Phaser.Scene {
     // }
     
     preload(): void {
-        this.load.image("tiles", "../../assets/tilesets/tileset_bqvw_32x-indoor.png")
+        this.load.image("indoor", "../../assets/tilesets/tileset_bqvw_32x-indoor.png")
         this.load.tilemapTiledJSON("map", "../../assets/tilemaps/bqvw-map.json");     
         
         this.load.spritesheet('girl',
@@ -43,24 +43,45 @@ export default class Demo extends Phaser.Scene {
         this.load.spritesheet('lia', 'assets/lia_sprite.png',
         {frameWidth: 32, frameHeight: 32,
         startFrame: 0, endFrame: 9})
+
+        this.load.spritesheet('ellen', 'assets/ellen-sprite.png',
+        {frameWidth: 32, frameHeight: 32})
+
+        // this.load.spritesheet('teste', 'assets/testesprite-up.png',
+        // {frameWidth: 40, frameHeight: 48})
+        // this.load.spritesheet('testeLeft', 'assets/testesprite-left.png',
+        // {frameWidth: 40, frameHeight: 48})
     }
 
     create(): void {
         
         const map = this.make.tilemap({ key: "map" });
 
-        const tileset = map.addTilesetImage("indoor", "tiles");
+        const indoor = map.addTilesetImage('indoor', 'indoor');
 
-        const belowLayer = map.createLayer("AbaixoPlayer", tileset);
-        const worldLayer = map.createLayer("NivelPlayer", tileset);
-
+        const belowLayer = map.createLayer("AbaixoPlayer", indoor);
+        const evenBelowLayer = map.createLayer("ObjetosAbaixoPlayer", indoor)
+        const worldLayer = map.createLayer("NivelPlayer", indoor);
+        const decor = map.createLayer("ObjetosDecor", indoor)
         worldLayer!.setCollisionByProperty({ collide: true })
-
-        this.player = this.physics.add.sprite(100, 450, 'lia');
+        this.player = this.physics.add.sprite(100, 450, 'ellen');
         // this.player.body.setCollideWorldBounds(true)
+        const aboveLayer = map.createLayer("AcimaPlayer", indoor);
+        const evenAboveLayer = map.createLayer("paredeTetos", indoor);
 
-        const aboveLayer = map.createLayer("AcimaPlayer", tileset);
-        const evenAboveLayer = map.createLayer("paredeTetos", tileset);
+
+
+        this.camadaObjetos = map.objects.find( layer => layer.name === "collideObjects" )
+        if(this.camadaObjetos){
+            this.camadaObjetos.objects.forEach(item => {
+                let itemObj = this.physics.add.sprite(item.x, item.y, null, null).setVisible(false).setActive(true).setOrigin(0, 0).setOffset(0, 0)
+                itemObj.body.setSize(item.width, item.height, false)
+                itemObj.body.setImmovable(true)
+
+                this.physics.add.collider(this.player, itemObj)
+            })
+        }
+
 
 
         // Adicionar colisão com as paredes
@@ -78,7 +99,7 @@ export default class Demo extends Phaser.Scene {
         }
 
         // Adicionando NPC por Object Layer
-        this.camadaNpc = map.objects.find( layer => layer.name === "NPCLayer" )       
+        // this.camadaNpc = map.objects.find( layer => layer.name === "NPCLayer" )       
 
         if (this.camadaNpc) {
             this.camadaNpc.objects.forEach(npc => {
@@ -99,32 +120,47 @@ export default class Demo extends Phaser.Scene {
 
         // Cria a camera
         const camera = this.cameras.main
-        camera.startFollow(this.player)
+        camera.setZoom(1.5)
+        camera.startFollow(this.player, false, 0.1, 0.1)
 
 
         this.anims.create({
+        key: 'up',
+        frames: this.anims.generateFrameNumbers('ellen', { start: 0, end: 2 }),
+        frameRate: 10,
+        repeat: -1
+        });
+
+        this.anims.create({
+        key: 'down',
+        frames: this.anims.generateFrameNumbers('ellen', { start: 12, end: 14 }),
+        frameRate: 10,
+        repeat: -1
+        });
+
+        this.anims.create({
         key: 'left',
-        frames: this.anims.generateFrameNumbers('girl', { start: 0, end: 3 }),
+        frames: this.anims.generateFrameNumbers('ellen', { start: 3, end: 6 }),
         frameRate: 10,
         repeat: -1
         });
 
         this.anims.create({
         key: 'turn',
-        frames: [{ key: 'girl', frame: 4 }],
+        frames: [{ key: 'ellen', frame: 7 }],
         frameRate: 20
         });
 
         this.anims.create({
         key: 'right',
-        frames: this.anims.generateFrameNumbers('girl', { start: 5, end: 8 }),
+        frames: this.anims.generateFrameNumbers('ellen', { start: 8, end: 11 }),
         frameRate: 10,
         repeat: -1
         });
 
         this.anims.create({
         key: 'left',
-        frames: this.anims.generateFrameNumbers('girl', { start: 0, end: 3 }),
+        frames: this.anims.generateFrameNumbers('ellen', { start: 3, end: 6 }),
         frameRate: 10,
         repeat: -1
         });
@@ -160,6 +196,16 @@ export default class Demo extends Phaser.Scene {
         this.player.setVelocityX(160);
 
         this.player.anims.play('right', true);
+        } 
+        else if (this.cursors.up.isDown) {
+        this.player.setVelocityX(160);
+
+        this.player.anims.play('up', true);
+        }
+        else if (this.cursors.down.isDown) {
+        this.player.setVelocityX(160);
+
+        this.player.anims.play('down', true);
         }
         else {
         this.player.setVelocityX(0);
