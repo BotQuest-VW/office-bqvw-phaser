@@ -99,7 +99,7 @@ export default class Demo extends Phaser.Scene {
         }
 
         // Adicionando NPC por Object Layer
-        // this.camadaNpc = map.objects.find( layer => layer.name === "NPCLayer" )       
+        this.camadaNpc = map.objects.find( layer => layer.name === "NPCLayer" )       
 
         if (this.camadaNpc) {
             this.camadaNpc.objects.forEach(npc => {

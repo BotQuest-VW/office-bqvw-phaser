@@ -2088,10 +2088,10 @@ phaser3-nineslice@^0.5.0:
     phaser "^3.13.0"
     webpack-cli "^3.1.1"
 
-phaser3-rex-plugins@^1.60.4:
-  version "1.60.4"
-  resolved "https://registry.npmjs.org/phaser3-rex-plugins/-/phaser3-rex-plugins-1.60.4.tgz"
-  integrity sha512-EzcwHnjmGgnFTZxTeyTTZDqTXdOevxujttpZjgzJGJXfGKKPK1vBtRP2P52DcEaAyKWdn5srbP53yOir+zE98g==
+phaser3-rex-plugins@^1.60.5:
+  version "1.60.5"
+  resolved "https://registry.npmjs.org/phaser3-rex-plugins/-/phaser3-rex-plugins-1.60.5.tgz"
+  integrity sha512-4H01cj2HdN9aUlSlsFncENOV1nk+LZEdMJJ5fDch4cJqNwE0xFpetBdCJ+0H9I3hK1rvHxw58QABmmT5aiHl+g==
   dependencies:
     eventemitter3 "^3.1.2"
     handlebars "^4.7.7"
