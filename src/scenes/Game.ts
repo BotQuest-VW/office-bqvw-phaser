@@ -120,7 +120,7 @@ export default class Demo extends Phaser.Scene {
 
         // Cria a camera
         const camera = this.cameras.main
-        camera.setZoom(1.5)
+        camera.setZoom(2.5)
         camera.startFollow(this.player, false, 0.1, 0.1)
 
 
@@ -237,6 +237,21 @@ export default class Demo extends Phaser.Scene {
                 this.player.body.setVelocityY(speed);
             }            
         }
+
+        if(this.input.keyboard.checkDown(this.actionKey, 200)){
+            var caixa = document.getElementById("teste")
+
+            caixa!.style.display = "flex"
+        }
+
+        var fechar = this.input.keyboard.addKey("a")
+
+        if(this.input.keyboard.checkDown(fechar, 200)){
+            var caixa = document.getElementById("teste")
+
+            caixa!.style.display = "none"
+        }
+
 
         // Open dialog
         if ( this.interativo && this.input.keyboard.checkDown(this.actionKey, 400)) {
