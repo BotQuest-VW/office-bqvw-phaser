@@ -8,14 +8,196 @@
     <link rel="stylesheet" href="style.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
-  </head>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Pixelify+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">  </head>
   <body>
     <div id="game">
       <section id="overlay-chat">
-        <div>
-          TESTE
+        <div id="container-overlay">
+          O CHAT PODE VIR NESSA DIV
           <img onclick="closeOverlay()" class="closeOverlay" src="https://firebasestorage.googleapis.com/v0/b/bqvw-bc2fc.appspot.com/o/close_icon.png?alt=media&token=a3927af4-33ef-440e-b3e3-48750726bf21" alt="">
+        </div>
+      </section>
+
+      <!-- saudação do ínicio -->
+      <section id="bubbleChat-container">
+        <div id="bubbleChat-canvas">
+          <div class="top">
+            <div class="pixel off"></div>
+            <div class="pixel"></div>
+            <div class="pixel"></div>
+            <div class="pixel"></div>
+            <div class="pixel"></div>
+            <div class="pixel"></div>
+            <div class="pixel"></div>
+            <div class="pixel"></div>
+            <div class="pixel"></div>
+            <div class="pixel"></div>
+            <div class="pixel"></div>
+            <div class="pixel"></div>
+            <div class="pixel"></div>
+            <div class="pixel"></div>
+            <div class="pixel"></div>
+            <div class="pixel"></div>
+            <div class="pixel"></div>
+            <div class="pixel"></div>
+            <div class="pixel"></div>
+            <div class="pixel"></div>
+            <div class="pixel"></div>
+            <div class="pixel"></div>
+            <div class="pixel"></div>
+            <div class="pixel"></div>
+            <div class="pixel"></div>
+            <div class="pixel"></div>
+            <div class="pixel"></div>
+            <div class="pixel"></div>
+            <div class="pixel"></div>
+            <div class="pixel"></div>
+            <div class="pixel"></div>
+            <div class="pixel"></div>
+            <div class="pixel"></div>
+            <div class="pixel"></div>
+            <div class="pixel"></div>
+            <div class="pixel"></div>
+            <div class="pixel"></div>
+            <div class="pixel"></div>
+            <div class="pixel"></div>
+            <div class="pixel"></div>
+            <div class="pixel"></div>
+            <div class="pixel"></div>
+            <div class="pixel"></div>
+            <div class="pixel"></div>
+            <div class="pixel"></div>
+            <div class="pixel"></div>
+            <div class="pixel"></div>
+            <div class="pixel"></div>
+            <div class="pixel"></div>
+            <div class="pixel off"></div>
+          </div>
+          <div class="left">
+            <div class="pixel off"></div>
+            <div class="pixel"></div>
+            <div class="pixel"></div>
+            <div class="pixel"></div>
+            <div class="pixel off"></div>
+          </div>
+          <div class="right">
+            <div class="pixel off"></div>
+            <div class="pixel"></div>
+            <div class="pixel"></div>
+            <div class="pixel"></div>
+            <div class="pixel off"></div>
+          </div>
+          <div class="rightShadow">
+            <div class="pixel shadow"></div>
+          </div>
+          <div class="bottom">
+            <div class="pixel off"></div>
+            <div class="pixel"></div>
+            <div class="pixel"></div>
+            <div class="pixel"></div>
+            <div class="pixel"></div>
+            <div class="pixel"></div>
+            <div class="pixel"></div>
+            <div class="pixel"></div>
+            <div class="pixel"></div>
+            <div class="pixel"></div>
+            <div class="pixel"></div>
+            <div class="pixel"></div>
+            <div class="pixel"></div>
+            <div class="pixel"></div>
+            <div class="pixel"></div>
+            <div class="pixel"></div>
+            <div class="pixel"></div>
+            <div class="pixel"></div>
+            <div class="pixel"></div>
+            <div class="pixel"></div>
+            <div class="pixel"></div>
+            <div class="pixel"></div>
+            <div class="pixel"></div>
+            <div class="pixel"></div>
+            <div class="pixel"></div>
+            <div class="pixel"></div>
+            <div class="pixel"></div>
+            <div class="pixel"></div>
+            <div class="pixel"></div>
+            <div class="pixel"></div>
+            <div class="pixel"></div>
+            <div class="pixel"></div>
+            <div class="pixel"></div>
+            <div class="pixel"></div>
+            <div class="pixel"></div>
+            <div class="pixel"></div>
+            <div class="pixel"></div>
+            <div class="pixel"></div>
+            <div class="pixel"></div>
+            <div class="pixel"></div>
+            <div class="pixel"></div>
+            <div class="pixel"></div>
+            <div class="pixel"></div>
+            <div class="pixel"></div>
+            <div class="pixel"></div>
+            <div class="pixel"></div>
+            <div class="pixel"></div>
+            <div class="pixel"></div>
+            <div class="pixel"></div>
+            <div class="pixel off"></div>
+          </div>
+          <div class="bottomShadow">
+            <div class="pixel off"></div>
+            <div class="pixel shadow"></div>
+            <div class="pixel shadow"></div>
+            <div class="pixel shadow"></div>
+            <div class="pixel shadow"></div>
+            <div class="pixel shadow"></div>
+            <div class="pixel shadow"></div>
+            <div class="pixel shadow"></div>
+            <div class="pixel shadow"></div>
+            <div class="pixel shadow"></div>
+            <div class="pixel shadow"></div>
+            <div class="pixel shadow"></div>
+            <div class="pixel shadow"></div>
+            <div class="pixel shadow"></div>
+            <div class="pixel shadow"></div>
+            <div class="pixel shadow"></div>
+            <div class="pixel shadow"></div>
+            <div class="pixel shadow"></div>
+            <div class="pixel shadow"></div>
+            <div class="pixel shadow"></div>
+            <div class="pixel shadow"></div>
+            <div class="pixel shadow"></div>
+            <div class="pixel shadow"></div>
+            <div class="pixel shadow"></div>
+            <div class="pixel shadow"></div>
+            <div class="pixel shadow"></div>
+            <div class="pixel shadow"></div>
+            <div class="pixel shadow"></div>
+            <div class="pixel shadow"></div>
+            <div class="pixel shadow"></div>
+            <div class="pixel shadow"></div>
+            <div class="pixel shadow"></div>
+            <div class="pixel shadow"></div>
+            <div class="pixel shadow"></div>
+            <div class="pixel shadow"></div>
+            <div class="pixel shadow"></div>
+            <div class="pixel shadow"></div>
+            <div class="pixel shadow"></div>
+            <div class="pixel shadow"></div>
+            <div class="pixel shadow"></div>
+            <div class="pixel shadow"></div>
+            <div class="pixel shadow"></div>
+            <div class="pixel shadow"></div>
+            <div class="pixel shadow"></div>
+            <div class="pixel shadow"></div>
+            <div class="pixel shadow"></div>
+            <div class="pixel shadow"></div>
+            <div class="pixel shadow"></div>
+            <div class="pixel off"></div>
+          </div>
+          <div id="bubbleChat-pixel">
+            <p id="mensagem" class="textline anim-typewriter">
+              Seja bem-vindo ao BQVW Game! Use X para interagir.
+            </p>
+          </div>
         </div>
       </section>
 
@@ -34,7 +216,7 @@
               <div>
                 <img class="img" src="https://firebasestorage.googleapis.com/v0/b/bqvw-bc2fc.appspot.com/o/_game%2Fsair-de-casa.png?alt=media&token=8ecbdf0d-870b-4b54-b857-2ae8436f86af" alt="">
               </div>
-              <span class="teste">Sair do game</span>
+              <span class="outGame">Sair do game</span>
             </a>
         </div>
       </footer>

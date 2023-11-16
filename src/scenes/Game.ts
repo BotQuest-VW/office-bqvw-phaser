@@ -1,19 +1,17 @@
 import Phaser from 'phaser';
 
 import DialogBox from '../utils/DialogBox';
-import NPC from '../actors/NPC';
 import RhGirl from '../sprites/npc/RhGirl';
-import Player from '../sprites/Player';
 
 export default class Demo extends Phaser.Scene{
     constructor() {
         super('GameScene');
     }
-
+    
     cursors!: Phaser.Types.Input.Keyboard.CursorKeys;
     
     actionKey!: Phaser.Input.Keyboard.Key
-
+    
     camadaParedes!: Phaser.Tilemaps.ObjectLayer | undefined
     camadaObjetos!: Phaser.Tilemaps.ObjectLayer | undefined
     camadaNpc!: Phaser.Tilemaps.ObjectLayer | undefined    
@@ -23,10 +21,13 @@ export default class Demo extends Phaser.Scene{
     interativo: boolean = false
     
     dialogo!: DialogBox
-
+    
     shopKeeper!: NPC
-
+    
     zone: any
+    bmpText: any
+    clouds: any
+    camera: any
 
     
     preload(): void {
@@ -43,11 +44,17 @@ export default class Demo extends Phaser.Scene{
         this.load.spritesheet('ellen', 'assets/ellen-sprite.png',
         {frameWidth: 32, frameHeight: 32})
 
+        this.load.bitmapFont('carrier_command', '../../../public/assets/fonts/carrier_command.png', '../../../public/assets/fonts/carrier_command.xml');
+
+        this.load.image('clouds', '../../../public/assets/bg/cloud-pattern.png')
     }
 
-    create(): void {
-        
+
+    create(): void {           
         const map = this.make.tilemap({ key: "map" });
+
+        // parallax
+        this.clouds = this.add.tileSprite(0, 0, 1570, 1800, "clouds")
 
         const indoor = map.addTilesetImage('indoor', 'indoor');
 
@@ -56,7 +63,7 @@ export default class Demo extends Phaser.Scene{
         const worldLayer = map.createLayer("NivelPlayer", indoor);
         const decor = map.createLayer("ObjetosDecor", indoor)
         worldLayer!.setCollisionByProperty({ collide: true })
-        this.player = this.physics.add.sprite(100, 450, 'ellen');
+        this.player = this.physics.add.sprite(100, 400, 'ellen');
         this.player.body.setCollideWorldBounds(true)
         const aboveLayer = map.createLayer("AcimaPlayer", indoor);
         const evenAboveLayer = map.createLayer("paredeTetos", indoor);
@@ -79,7 +86,7 @@ export default class Demo extends Phaser.Scene{
         this.physics.add.collider(this.player, NPCs) // adiciona colisão entre a RhGirl e o Player
 
         // criação da área de interação entre a RhGirl e o Player (total no phaser, não utilizei npclayer no tiled)
-        this.zone = this.add.zone(360, 250, 50, 50) // adiciona uma zona invisível, params: x, y, width, heigth
+        this.zone = this.add.zone(380, 250, 50, 50) // adiciona uma zona invisível, params: x, y, width, heigth
         this.physics.world.enable(this.zone, 0); // (0) DYNAMIC (1) STATIC // não sei, peguei na net e funcionou ಠ_ಠ
         this.zone.body.setAllowGravity(false); // gravidade para FALSO
         this.zone.body.moves = false; // sem movimentação
@@ -121,7 +128,8 @@ export default class Demo extends Phaser.Scene{
         // Cria a camera
         const camera = this.cameras.main
         camera.setZoom(2.5)
-        camera.startFollow(this.player, false, 0.1, 0.1)
+        camera.startFollow(this.player)
+
 
 
         this.anims.create({
@@ -173,10 +181,35 @@ export default class Demo extends Phaser.Scene{
 
         // Constrain the camera so that it isn't allowed to move outside the width/height of tilemap
         camera.setBounds(0, 0, map.widthInPixels, map.heightInPixels);
+
+        //texto de ajuda no game
+        // this.bmpText = this.add.bitmapText(10, 530, 'carrier_command','Use a tecla X para interagir!', 8);
+
+        // this.bmpText.inputEnabled = true;
+
+        // // o texto some após 5 segundos
+        // setTimeout(() => {
+        //     this.bmpText.destroy()
+        // }, 5000)
+
+        var saudacao = document.getElementById("mensagem")
+        var bubble = document.getElementById("bubbleChat-canvas")
+
+        setTimeout(() => {
+            bubble!.style.display = 'flex'
+        }, 1000)
+
+        setTimeout(() => {
+            saudacao!.remove()
+
+            bubble!.style.display = 'none'
+        }, 8000)
     }
 
     update(time: number, delta: number): void {
         this.cursors = this.input.keyboard.createCursorKeys();
+
+        this.clouds.tilePositionX -= 0.5;
 
         if (this.cursors.left.isDown) {
         this.player.setVelocityX(-160);
@@ -229,8 +262,6 @@ export default class Demo extends Phaser.Scene{
         }
 
 
-
-
         // Open dialog
         if ( this.interativo && this.input.keyboard.checkDown(this.actionKey, 400)) {
             if (!this.dialogo.open) {
@@ -267,20 +298,34 @@ export default class Demo extends Phaser.Scene{
 
         // criação zona de interação
         var embedded = this.zone.body.embedded // verifica se tem algo dentro da zona, no caso, o player
+       
+
+        // FUNÇÃO COM O PLAYER DENTRO DA ZONA, SEM CLIQUES
+        // if (embedded) {
+        //     console.log("entra")
+        //     var caixa = document.getElementById("overlay-chat")
+        //     caixa!.style.opacity = "1" // o overlay aparece
+        // }
+        // else if (!embedded) {
+        //     // console.log("sai")
+        //     var caixa = document.getElementById("overlay-chat")
+        //     caixa!.style.opacity = "0" // o overlay some
+        // }
         
-        if (embedded) {
-            // console.log("entra")
+        // this.zone.body.debugBodyColor = this.zone.body.touching.none ? 0x00ffff : 0xffff00;
+        // no debug consigo visualizar melhor quando o player toca a zona
+
+
+        //TESTE
+        // função com interação X para abrir chat PERTO do NPC
+        if(embedded && this.actionKey.isDown){
+            console.log("FOI KARALHO")
+
             var caixa = document.getElementById("overlay-chat")
             caixa!.style.opacity = "1" // o overlay aparece
         }
-        else if (!embedded) {
-            // console.log("sai")
-            var caixa = document.getElementById("overlay-chat")
-            caixa!.style.opacity = "0" // o overlay some
-        }
-        
-        this.zone.body.debugBodyColor = this.zone.body.touching.none ? 0x00ffff : 0xffff00;
-        // no debug consigo visualizar melhor quando o player toca a zona
+
+           
 
     }
 }

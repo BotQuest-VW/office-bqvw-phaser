@@ -600,7 +600,7 @@
         {
          "columns":36,
          "firstgid":1,
-         "image":"..\/..\/..\/..\/tiled\/BQVW-map\/tileset_bqvw_32x-indoor.png",
+         "image":"..\/tilesets\/tileset_bqvw_32x-indoor.png",
          "imageheight":1248,
          "imagewidth":1152,
          "margin":0,
