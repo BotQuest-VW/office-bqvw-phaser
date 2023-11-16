@@ -54,7 +54,7 @@ export default class Demo extends Phaser.Scene{
         const map = this.make.tilemap({ key: "map" });
 
         // parallax
-        this.clouds = this.add.tileSprite(0, 0, 1570, 1800, "clouds")
+        this.clouds = this.add.tileSprite(0, 0, 2000, 1800, "clouds")
 
         const indoor = map.addTilesetImage('indoor', 'indoor');
 
