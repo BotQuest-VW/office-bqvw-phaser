@@ -1,8 +1,11 @@
 import Phaser from 'phaser';
 
 import DialogBox from '../utils/DialogBox';
+import NPC from '../actors/NPC';
+import RhGirl from '../sprites/npc/RhGirl';
+import Player from '../sprites/Player';
 
-export default class Demo extends Phaser.Scene {
+export default class Demo extends Phaser.Scene{
     constructor() {
         super('GameScene');
     }
@@ -17,20 +20,14 @@ export default class Demo extends Phaser.Scene {
     
     player!: Phaser.Types.Physics.Arcade.SpriteWithDynamicBody
     
-    shopKeeper!: Phaser.Physics.Arcade.Sprite
     interativo: boolean = false
     
     dialogo!: DialogBox
 
-    // verificarInteracao(): void {
-    //     let distancia = Phaser.Math.Distance.Between(this.player.x, this.player.y, this.shopKeeper.x, this.shopKeeper.y)
+    shopKeeper!: NPC
 
-    //     if (distancia < 60) {
-    //         this.interativo = true            
-    //     } else {
-    //         this.interativo = false
-    //     }        
-    // }
+    zone: any
+
     
     preload(): void {
         this.load.image("indoor", "../../assets/tilesets/tileset_bqvw_32x-indoor.png")
@@ -41,16 +38,11 @@ export default class Demo extends Phaser.Scene {
         {frameWidth: 32, frameHeight: 32})
 
         this.load.spritesheet('lia', 'assets/lia_sprite.png',
-        {frameWidth: 32, frameHeight: 32,
-        startFrame: 0, endFrame: 9})
+        {frameWidth: 32, frameHeight: 32,})
 
         this.load.spritesheet('ellen', 'assets/ellen-sprite.png',
         {frameWidth: 32, frameHeight: 32})
 
-        // this.load.spritesheet('teste', 'assets/testesprite-up.png',
-        // {frameWidth: 40, frameHeight: 48})
-        // this.load.spritesheet('testeLeft', 'assets/testesprite-left.png',
-        // {frameWidth: 40, frameHeight: 48})
     }
 
     create(): void {
@@ -65,10 +57,34 @@ export default class Demo extends Phaser.Scene {
         const decor = map.createLayer("ObjetosDecor", indoor)
         worldLayer!.setCollisionByProperty({ collide: true })
         this.player = this.physics.add.sprite(100, 450, 'ellen');
-        // this.player.body.setCollideWorldBounds(true)
+        this.player.body.setCollideWorldBounds(true)
         const aboveLayer = map.createLayer("AcimaPlayer", indoor);
         const evenAboveLayer = map.createLayer("paredeTetos", indoor);
 
+        const rhGirl = new RhGirl({
+            // criação da moça do rh, através de uma classe base (RhGirl que recebe NPC)
+            scene: this,
+            x: 363,
+            y: 235,
+            key: 'rh_npc'
+        })
+
+        const NPCs = [
+            // array de NPCs, por enquanto só do Rh
+            rhGirl
+        ]
+
+        this.physics.add.group(NPCs, {}) // adiciona o grupo de NPCs para o grupo de física do jogo
+        rhGirl.body.setImmovable(true)  // deixa a RhGirl imóvel
+        this.physics.add.collider(this.player, NPCs) // adiciona colisão entre a RhGirl e o Player
+
+        // criação da área de interação entre a RhGirl e o Player (total no phaser, não utilizei npclayer no tiled)
+        this.zone = this.add.zone(360, 250, 50, 50) // adiciona uma zona invisível, params: x, y, width, heigth
+        this.physics.world.enable(this.zone, 0); // (0) DYNAMIC (1) STATIC // não sei, peguei na net e funcionou ಠ_ಠ
+        this.zone.body.setAllowGravity(false); // gravidade para FALSO
+        this.zone.body.moves = false; // sem movimentação
+
+        this.physics.add.overlap(this.player, this.zone); // adiciona um overlap (passar por) entre o player e a zona
 
 
         this.camadaObjetos = map.objects.find( layer => layer.name === "collideObjects" )
@@ -96,24 +112,8 @@ export default class Demo extends Phaser.Scene {
     
                 this.physics.add.collider(this.player, wall)
             })            
-        }
+        }  
 
-        // Adicionando NPC por Object Layer
-        // this.camadaNpc = map.objects.find( layer => layer.name === "NPCLayer" )       
-
-        if (this.camadaNpc) {
-            this.camadaNpc.objects.forEach(npc => {
-                let personagem = this.physics.add.sprite(npc.x, npc.y, "lia", 1).setVisible(true).setActive(true).setOrigin(0, 0).setOffset(0, 0)
-
-                personagem.body.setSize(npc.width, npc.height, false)
-                personagem.body.setImmovable(true)
-
-                this.shopKeeper = personagem
-
-                
-                this.physics.add.collider(this.player, this.shopKeeper)
-            })
-        }
 
         // Adicionar colisão com blocos da camada do player
         this.physics.add.collider(this.player, worldLayer)        
@@ -173,15 +173,6 @@ export default class Demo extends Phaser.Scene {
 
         // Constrain the camera so that it isn't allowed to move outside the width/height of tilemap
         camera.setBounds(0, 0, map.widthInPixels, map.heightInPixels);
-
-        // Help text that has a "fixed" position on the screen
-        this.add.text(16, 16, "Use as setas para se movimentar", {
-            font: "10px monospace",
-            color: "#ffffff",
-            padding: { x: 15, y: 8 },
-            backgroundColor: "#000000"
-        }).setScrollFactor(0);
-        
     }
 
     update(time: number, delta: number): void {
@@ -217,7 +208,6 @@ export default class Demo extends Phaser.Scene {
         this.player.setVelocityY(-330);
         }
 
-
         const speed = 170
         
         this.player.body.setVelocity(0);
@@ -238,19 +228,7 @@ export default class Demo extends Phaser.Scene {
             }            
         }
 
-        if(this.input.keyboard.checkDown(this.actionKey, 200)){
-            var caixa = document.getElementById("teste")
 
-            caixa!.style.display = "flex"
-        }
-
-        var fechar = this.input.keyboard.addKey("a")
-
-        if(this.input.keyboard.checkDown(fechar, 200)){
-            var caixa = document.getElementById("teste")
-
-            caixa!.style.display = "none"
-        }
 
 
         // Open dialog
@@ -281,12 +259,28 @@ export default class Demo extends Phaser.Scene {
                 // Escolher opcao
                 this.dialogo.escolherOpcao()
             }
-        }
-
-        // this.verificarInteracao()        
+        }     
 
         // Normalize and scale the velocity so that player can't move faster along a diagonal
         this.player.body.velocity.normalize().scale(speed);
+
+
+        // criação zona de interação
+        var embedded = this.zone.body.embedded // verifica se tem algo dentro da zona, no caso, o player
+        
+        if (embedded) {
+            // console.log("entra")
+            var caixa = document.getElementById("overlay-chat")
+            caixa!.style.opacity = "1" // o overlay aparece
+        }
+        else if (!embedded) {
+            // console.log("sai")
+            var caixa = document.getElementById("overlay-chat")
+            caixa!.style.opacity = "0" // o overlay some
+        }
+        
+        this.zone.body.debugBodyColor = this.zone.body.touching.none ? 0x00ffff : 0xffff00;
+        // no debug consigo visualizar melhor quando o player toca a zona
 
     }
 }

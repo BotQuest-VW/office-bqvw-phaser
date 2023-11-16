@@ -22,16 +22,6 @@ export default class Demo extends Phaser.Scene {
     dialogo!: DialogBox
 
     shopKeeper!: NPC
-
-    verificarInteracao(): void {
-        let distancia = Phaser.Math.Distance.Between(this.player.x, this.player.y, this.shopKeeper.x, this.shopKeeper.y)
-
-        if (distancia < 60) {
-            this.interativo = true            
-        } else {
-            this.interativo = false
-        }        
-    }
     
     preload(): void {
         this.load.image("tiles", "../../assets/tilesets/Room_Builder_free_32x32.png")

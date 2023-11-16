@@ -98,7 +98,7 @@ footer{
     position: relative;
 }
 
-.botao_sair div:nth-child(2){
+.botao_sair div{
     border-radius: 10px;
     background: rgba(255, 255, 255, 0.41);
     width: 60px;
@@ -132,18 +132,31 @@ footer{
     top: -60px;
 }
 
-#teste{
-    display: none;
-
+#overlay-chat{
+    transition: ease-in all 0.2s;
+    opacity: 0;
+    display: flex;
     position: absolute;
-    top: 50px;
-    right: 380px;
-    height: 600px;
-    width: 900px;
-    border-radius: 20px;
-    border: white solid 2px;
+    width: 100vw;
+    height: 100vh;
     align-items: center;
     justify-content: center;
+    background-color: rgb(0, 0, 0, 0.4);
+}
+
+#overlay-chat div:nth-child(1){
+    width: 65%;
+    height: 65%;
+    border-radius: 30px;
+    border: white solid 2px;
     color: var(--branco);
+    background: rgba(10, 43, 67, 0.50);
     backdrop-filter: blur(10px);
+}
+
+.closeOverlay{
+    cursor: pointer;
+    position: absolute;
+    right: -20px;
+    top: -20px;
 }
