@@ -203,13 +203,13 @@ export default class Demo extends Phaser.Scene{
             saudacao!.remove()
 
             bubble!.style.display = 'none'
-        }, 8000)
+        }, 10000)
     }
 
     update(time: number, delta: number): void {
         this.cursors = this.input.keyboard.createCursorKeys();
 
-        this.clouds.tilePositionX -= 0.5;
+        this.clouds.tilePositionX -= 0.2;
 
         if (this.cursors.left.isDown) {
         this.player.setVelocityX(-160);
@@ -324,8 +324,5 @@ export default class Demo extends Phaser.Scene{
             var caixa = document.getElementById("overlay-chat")
             caixa!.style.opacity = "1" // o overlay aparece
         }
-
-           
-
     }
 }
