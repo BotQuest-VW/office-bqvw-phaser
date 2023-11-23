@@ -16,6 +16,7 @@ class NPC extends Sprite{
         config.scene.add.existing(this)
         
         this.setTexture(config.texture)
+        this.setFrame(config.setFrame)
     }
 }
 

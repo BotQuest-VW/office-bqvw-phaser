@@ -1,6 +1,6 @@
 import NPC from "../base/NPC";
 
-class RhGirl extends NPC{
+class Recepcionist extends NPC{
     constructor(config:any){
         super({
             ...config,
@@ -11,4 +11,4 @@ class RhGirl extends NPC{
 
 }
 
-export default RhGirl
+export default Recepcionist

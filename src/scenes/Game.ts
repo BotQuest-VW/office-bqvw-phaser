@@ -2,6 +2,7 @@ import Phaser from 'phaser';
 
 import DialogBox from '../utils/DialogBox';
 import RhGirl from '../sprites/npc/RhGirl';
+import Recepcionist from '../sprites/npc/Recepcionist';
 
 export default class Demo extends Phaser.Scene{
     constructor() {
@@ -25,9 +26,20 @@ export default class Demo extends Phaser.Scene{
     shopKeeper!: NPC
     
     zone: any
+    zone_reception: any
     bmpText: any
     clouds: any
     camera: any
+
+    popup = document.getElementById("help-bubble")
+
+    // rh
+    text = document.getElementById("dialog-mensagem")
+    bubbleChat = document.getElementById("dialog-container")
+
+    // recepção
+    textRecep = document.getElementById("dialog-mensagem-recep")
+    bubbleChatRecep = document.getElementById("dialog-container-recep")
 
     
     preload(): void {
@@ -38,8 +50,8 @@ export default class Demo extends Phaser.Scene{
         'assets/base_teste.png',
         {frameWidth: 32, frameHeight: 32})
 
-        this.load.spritesheet('lia', 'assets/lia_sprite.png',
-        {frameWidth: 32, frameHeight: 32,})
+        this.load.spritesheet('lia', 'assets/lia-sprite.png',
+        {frameWidth: 32, frameHeight: 32, startFrame: 2, endFrame: 15})
 
         this.load.spritesheet('ellen', 'assets/ellen-sprite.png',
         {frameWidth: 32, frameHeight: 32})
@@ -63,35 +75,63 @@ export default class Demo extends Phaser.Scene{
         const worldLayer = map.createLayer("NivelPlayer", indoor);
         const decor = map.createLayer("ObjetosDecor", indoor)
         worldLayer!.setCollisionByProperty({ collide: true })
-        this.player = this.physics.add.sprite(100, 400, 'ellen');
+        this.player = this.physics.add.sprite(765, 460, 'ellen');
         this.player.body.setCollideWorldBounds(true)
         const aboveLayer = map.createLayer("AcimaPlayer", indoor);
         const evenAboveLayer = map.createLayer("paredeTetos", indoor);
 
+
         const rhGirl = new RhGirl({
             // criação da moça do rh, através de uma classe base (RhGirl que recebe NPC)
             scene: this,
-            x: 363,
-            y: 235,
+            x: 360,
+            y: 305,
             key: 'rh_npc'
         })
 
+        const recepcionist = new Recepcionist({
+            scene: this,
+            x: 690,
+            y: 205,
+            key: 'recepcionist_npc'
+        })
+
         const NPCs = [
-            // array de NPCs, por enquanto só do Rh
-            rhGirl
+            rhGirl,
+            recepcionist
         ]
+
+        NPCs.forEach((npcs) => {
+            npcs.depth = 0
+        })
+
+        recepcionist.depth = 0
+        aboveLayer.depth = 1
+        evenAboveLayer.depth = 2
 
         this.physics.add.group(NPCs, {}) // adiciona o grupo de NPCs para o grupo de física do jogo
         rhGirl.body.setImmovable(true)  // deixa a RhGirl imóvel
-        this.physics.add.collider(this.player, NPCs) // adiciona colisão entre a RhGirl e o Player
+        recepcionist.body.setImmovable(true)  // deixa a recepcionist imóvel
+        this.physics.add.collider(this.player, NPCs) // adiciona colisão entre os NPCs e o Player
+
+        
 
         // criação da área de interação entre a RhGirl e o Player (total no phaser, não utilizei npclayer no tiled)
-        this.zone = this.add.zone(380, 250, 50, 50) // adiciona uma zona invisível, params: x, y, width, heigth
+        this.zone = this.add.zone(380, 350, 50, 50) // adiciona uma zona invisível, params: x, y, width, heigth
         this.physics.world.enable(this.zone, 0); // (0) DYNAMIC (1) STATIC // não sei, peguei na net e funcionou ಠ_ಠ
         this.zone.body.setAllowGravity(false); // gravidade para FALSO
         this.zone.body.moves = false; // sem movimentação
 
         this.physics.add.overlap(this.player, this.zone); // adiciona um overlap (passar por) entre o player e a zona
+
+
+        // criação da área de interação entre a Recepcionista e o Player
+        this.zone_reception = this.add.zone(700, 260, 50, 50) // adiciona uma zona invisível, params: x, y, width, heigth
+        this.physics.world.enable(this.zone_reception, 0); // (0) DYNAMIC (1) STATIC // não sei, peguei na net e funcionou ಠ_ಠ
+        this.zone_reception.body.setAllowGravity(false); // gravidade para FALSO
+        this.zone_reception.body.moves = false; // sem movimentação
+
+        this.physics.add.overlap(this.player, this.zone_reception); // adiciona um overlap (passar por) entre o player e a zona
 
 
         this.camadaObjetos = map.objects.find( layer => layer.name === "collideObjects" )
@@ -127,7 +167,7 @@ export default class Demo extends Phaser.Scene{
 
         // Cria a camera
         const camera = this.cameras.main
-        camera.setZoom(2.5)
+        camera.setZoom(3.2)
         camera.startFollow(this.player)
 
 
@@ -207,6 +247,7 @@ export default class Demo extends Phaser.Scene{
     }
 
     update(time: number, delta: number): void {
+               
         this.cursors = this.input.keyboard.createCursorKeys();
 
         this.clouds.tilePositionX -= 0.2;
@@ -296,8 +337,11 @@ export default class Demo extends Phaser.Scene{
         this.player.body.velocity.normalize().scale(speed);
 
 
-        // criação zona de interação
+        // criação zona de interação do rh
         var embedded = this.zone.body.embedded // verifica se tem algo dentro da zona, no caso, o player
+        
+        // criação zona de interação do rh
+        var embedded_reception = this.zone_reception.body.embedded // verifica se tem algo dentro da zona, no caso, o player
        
 
         // FUNÇÃO COM O PLAYER DENTRO DA ZONA, SEM CLIQUES
@@ -315,14 +359,36 @@ export default class Demo extends Phaser.Scene{
         // this.zone.body.debugBodyColor = this.zone.body.touching.none ? 0x00ffff : 0xffff00;
         // no debug consigo visualizar melhor quando o player toca a zona
 
-
-        //TESTE
         // função com interação X para abrir chat PERTO do NPC
         if(embedded && this.actionKey.isDown){
             console.log("FOI KARALHO")
 
             var caixa = document.getElementById("overlay-chat")
             caixa!.style.opacity = "1" // o overlay aparece
+
+            this.popup!.style.display = "none" // o overlay sai
+            this.bubbleChat!.style.display = "none" // bubbleChat sai
+        }
+
+        if (embedded) {
+                console.log("rh ok")
+                this.popup!.style.opacity = "1" // o overlay aparece
+                this.bubbleChat!.style.opacity = "1" // bubbleChat aparece
+                this.text!.innerHTML = "Olá! Sou a Maria, faço parte do RH. Do que precisa hoje?"
+            }
+            else if (!embedded) {
+                this.popup!.style.opacity = "0" // o overlay some
+                this.bubbleChat!.style.opacity = "0" // bubbleChat some
+                this.popup!.style.display = "flex" // o overlay volta
+                this.bubbleChat!.style.display = "flex" // bubbleChat volta
+        }   
+        
+        if(embedded_reception){
+            console.log("recepção ok")
+            this.bubbleChatRecep!.style.opacity = "1" // bubbleChat aparece
+            this.textRecep!.innerHTML = "Olá! Sou a recepcionista, você está no andar de Recursos Humanos. Caso precise de ajuda, entre na sala a direita e fale com Maria."
+        } else if (!embedded_reception){
+            this.bubbleChatRecep!.style.opacity = "0" // bubbleChat some
         }
     }
 }

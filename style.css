@@ -193,65 +193,6 @@ footer{
     align-items: center;
 }
 
-.pixel{
-    width: 16px;
-    height: 16px;
-    float: left;
-    /* box-shadow: 0px 0px 1px #000; */
-}
-
-.pixel{
-    background: #000000;
-}
-
-.off{
-    background: none;
-}
-
-.left,
-.right{
-    display: flex;
-    flex-direction: column;
-
-    position: absolute;    
-}
-
-.top{
-    position: absolute; 
-    top: 0;
-}
-
-.left{
-    left: 0;
-}
-
-.right{
-    right: 0;
-}
-
-.rightShadow{
-    display: flex;
-    flex-direction: column;
-    position: absolute;
-    right: 0;
-    bottom: 0;
-}
-
-.bottom{
-    position: absolute;
-    bottom: 0;
-}
-
-.bottomShadow{
-    position: absolute;
-    bottom: -16px;
-    right: 0;
-}
-
-.shadow{
-    background: rgb(0, 0, 0, 0.5);
-}
-
 /* config bubblechat onde aparece o texto */
 #bubbleChat-pixel{
     font-family: var(--pixelFont);
@@ -281,15 +222,68 @@ footer{
 
 .anim-typewriter{
     animation: typewriter 4s steps(44) 1s 1 normal both,
-               blinkTextCursor 500ms steps(44) infinite normal;
-  }
+                blinkTextCursor 500ms steps(44) infinite normal;
+}
 
 
-  @keyframes typewriter{
+@keyframes typewriter{
     from{width: 0;}
     to{width: 40em;}
-  }
-  @keyframes blinkTextCursor{
+}
+@keyframes blinkTextCursor{
     from{border-right-color: rgba(255,255,255,.75);}
     to{border-right-color: transparent;}
-  }
+}
+
+
+#help-bubble{
+    transition: ease-in all 0.1s;
+    font-family: var(--pixelFont);
+
+    width: 250px;
+
+    padding: 10px;
+    text-align: center;
+    background: var(--branco);
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 7px 7px 0px 0px rgba(0,0,0);
+
+    position: absolute;
+    left: 20px;
+    bottom: 100px;
+
+    opacity: 0;
+}
+
+#dialog,
+#dialog-recep{
+    transition: ease-in all 0.1s;
+    font-family: var(--pixelFont);
+
+    padding: 10px;
+    text-align: center;
+    background: var(--branco);
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 7px 7px 0px 0px rgba(0,0,0);
+}
+
+#dialog-container,
+#dialog-container-recep{
+    transition: ease-in all 0.1s;
+    position: absolute;
+    bottom: 110px;
+    width: 100vw;
+    height: 100px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    opacity: 0;
+}
