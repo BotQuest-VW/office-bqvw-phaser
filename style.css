@@ -240,9 +240,7 @@ footer{
     transition: ease-in all 0.1s;
     font-family: var(--pixelFont);
 
-    width: 250px;
-
-    padding: 10px;
+    padding: 10px 20px;
     text-align: center;
     background: var(--branco);
 
