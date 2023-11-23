@@ -48,10 +48,16 @@ export default class Demo extends Phaser.Scene{
         this.load.tilemapTiledJSON("map", "../../assets/tilemaps/bqvw-map.json");     
 
         this.load.spritesheet('maria', 'assets/maria-sprite-sheet.png',
-        {frameWidth: 32, frameHeight: 32})
+        {frameWidth: 48, frameHeight: 48})
 
-        this.load.spritesheet('recepcionist', 'assets/recepcionista-sprite.png',
-        {frameWidth: 32, frameHeight: 32})
+        this.load.spritesheet('maria-talk', 'assets/maria-sprite-sheet-talk-48x48.png',
+        {frameWidth: 48, frameHeight: 48})
+
+        this.load.spritesheet('recepcionist', 'assets/recepcionista-sprite-48x48.png',
+        {frameWidth: 48, frameHeight: 48})
+
+        this.load.spritesheet('recepcionist-talk', 'assets/recepcionista-sprite-talk.png',
+        {frameWidth: 48, frameHeight: 48})
 
         this.load.spritesheet('ellen', 'assets/ellen-sprite.png',
         {frameWidth: 32, frameHeight: 32})
@@ -84,15 +90,15 @@ export default class Demo extends Phaser.Scene{
         this.rhGirl = new RhGirl({
             // criação da moça do rh, através de uma classe base (RhGirl que recebe NPC)
             scene: this,
-            x: 360,
-            y: 305,
+            x: 350,
+            y: 295,
             key: 'rh_npc'
         })
 
         this.recepcionist = new Recepcionist({
             scene: this,
             x: 690,
-            y: 205,
+            y: 200,
             key: 'recepcionist_npc'
         })
 
@@ -168,13 +174,42 @@ export default class Demo extends Phaser.Scene{
         const camera = this.cameras.main
         camera.setZoom(3.2)
         camera.startFollow(this.player)
-
+        
+        
+        // ANIMAÇÃO RH PARADA
         this.anims.create({
-            key: 'idle',
-            frames: this.anims.generateFrameNumbers('maria', { frames: [ 0, 1, 2, 3] }),
+            key: 'idle-maria',
+            frames: this.anims.generateFrameNumbers('maria', { frames: [ 0, 1, 2] }),
             frameRate: 2,
             repeat: -1
         })
+
+        // ANIMAÇÃO RH ATIVA
+        this.anims.create({
+            key: 'talking-maria',
+            frames: this.anims.generateFrameNumbers('maria-talk', { start: 0, end: 2 }),
+            frameRate: 2,
+            repeat: -1
+        })
+
+
+        // ANIMAÇÃO RECEPCIONISTA PARADA
+        this.anims.create({
+            key: 'idle-recep',
+            frames: this.anims.generateFrameNumbers('recepcionist', { frames: [ 0, 1, 2] }),
+            frameRate: 2,
+            repeat: -1
+        })
+
+        // ANIMAÇÃO RECEPCIONISTA ATIVA
+        this.anims.create({
+            key: 'talking-recep',
+            frames: this.anims.generateFrameNumbers('recepcionist-talk', { start: 0, end: 2 }),
+            frameRate: 2,
+            repeat: -1
+        })
+
+
 
         this.anims.create({
         key: 'up',
@@ -241,7 +276,8 @@ export default class Demo extends Phaser.Scene{
     }
 
     update(time: number, delta: number): void {
-        this.rhGirl.anims.play('idle', true)
+        this.rhGirl.anims.play('idle-maria', true)
+        this.recepcionist.anims.play('idle-recep', true)
               
         this.cursors = this.input.keyboard.createCursorKeys();
 
@@ -366,22 +402,30 @@ export default class Demo extends Phaser.Scene{
         }
 
         if (embedded) {
-                console.log("rh ok")
-                this.popup!.style.opacity = "1" // o overlay aparece
-                this.bubbleChat!.style.opacity = "1" // bubbleChat aparece
-                this.text!.innerHTML = "Olá! Sou a Maria, faço parte do RH. Do que precisa hoje?"
+            this.rhGirl.setTexture('maria-talk') // muda a textura para a que tem o balãozinho
+            this.rhGirl.anims.play('talking-maria', true)
+
+
+            this.popup!.style.opacity = "1" // o overlay aparece
+            this.bubbleChat!.style.opacity = "1" // bubbleChat aparece
+            this.text!.innerHTML = "Olá! Sou a Maria, faço parte do RH. Do que precisa hoje?"
             }
-            else if (!embedded) {
-                this.popup!.style.opacity = "0" // o overlay some
-                this.bubbleChat!.style.opacity = "0" // bubbleChat some
-                this.popup!.style.display = "flex" // o overlay volta
-                this.bubbleChat!.style.display = "flex" // bubbleChat volta
+        else if (!embedded) {
+            this.popup!.style.opacity = "0" // o overlay some
+            this.bubbleChat!.style.opacity = "0" // bubbleChat some
+            this.popup!.style.display = "flex" // o overlay volta
+            this.bubbleChat!.style.display = "flex" // bubbleChat volta
         }   
         
         if(embedded_reception){
-            console.log("recepção ok")
+            this.recepcionist.setTexture('recepcionist-talk') // muda a textura para a que tem o balãozinho
+            this.recepcionist.anims.play('talking-recep', true)
+
+
             this.bubbleChatRecep!.style.opacity = "1" // bubbleChat aparece
             this.textRecep!.innerHTML = "Olá! Sou a recepcionista, você está no andar de Recursos Humanos. Caso precise de ajuda, entre na sala a direita e fale com Maria."
+
+
         } else if (!embedded_reception){
             this.bubbleChatRecep!.style.opacity = "0" // bubbleChat some
         }
