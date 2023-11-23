@@ -62,9 +62,7 @@ export default class Demo extends Phaser.Scene{
         this.load.spritesheet('ellen', 'assets/ellen-sprite.png',
         {frameWidth: 32, frameHeight: 32})
 
-        this.load.bitmapFont('carrier_command', '../../../public/assets/fonts/carrier_command.png', '../../../public/assets/fonts/carrier_command.xml');
-
-        this.load.image('clouds', '../../../public/assets/bg/cloud-pattern.png')
+        this.load.image('clouds', 'assets/bg/cloud-pattern.png')
     }
 
 
