@@ -4,11 +4,10 @@ class Recepcionist extends NPC{
     constructor(config:any){
         super({
             ...config,
-            texture: 'lia',
-            setFrame: 7
+            texture: 'recepcionist',
+            setFrame: 2,
         })
     }
-
 }
 
 export default Recepcionist

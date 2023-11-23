@@ -4,8 +4,8 @@ class RhGirl extends NPC{
     constructor(config:any){
         super({
             ...config,
-            texture: 'lia',
-            setFrame: 7
+            texture: 'maria',
+            setFrame: 2
         })
     }
 

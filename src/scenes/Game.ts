@@ -1,4 +1,5 @@
 import Phaser from 'phaser';
+import { GameObjects } from 'phaser';
 
 import DialogBox from '../utils/DialogBox';
 import RhGirl from '../sprites/npc/RhGirl';
@@ -18,13 +19,13 @@ export default class Demo extends Phaser.Scene{
     camadaNpc!: Phaser.Tilemaps.ObjectLayer | undefined    
     
     player!: Phaser.Types.Physics.Arcade.SpriteWithDynamicBody
+    rhGirl!: GameObjects.Sprite
+    recepcionist!: GameObjects.Sprite
     
     interativo: boolean = false
     
     dialogo!: DialogBox
-    
-    shopKeeper!: NPC
-    
+        
     zone: any
     zone_reception: any
     bmpText: any
@@ -45,13 +46,12 @@ export default class Demo extends Phaser.Scene{
     preload(): void {
         this.load.image("indoor", "../../assets/tilesets/tileset_bqvw_32x-indoor.png")
         this.load.tilemapTiledJSON("map", "../../assets/tilemaps/bqvw-map.json");     
-        
-        this.load.spritesheet('girl',
-        'assets/base_teste.png',
+
+        this.load.spritesheet('maria', 'assets/maria-sprite-sheet.png',
         {frameWidth: 32, frameHeight: 32})
 
-        this.load.spritesheet('lia', 'assets/lia-sprite.png',
-        {frameWidth: 32, frameHeight: 32, startFrame: 2, endFrame: 15})
+        this.load.spritesheet('recepcionist', 'assets/recepcionista-sprite.png',
+        {frameWidth: 32, frameHeight: 32})
 
         this.load.spritesheet('ellen', 'assets/ellen-sprite.png',
         {frameWidth: 32, frameHeight: 32})
@@ -81,7 +81,7 @@ export default class Demo extends Phaser.Scene{
         const evenAboveLayer = map.createLayer("paredeTetos", indoor);
 
 
-        const rhGirl = new RhGirl({
+        this.rhGirl = new RhGirl({
             // criação da moça do rh, através de uma classe base (RhGirl que recebe NPC)
             scene: this,
             x: 360,
@@ -89,7 +89,7 @@ export default class Demo extends Phaser.Scene{
             key: 'rh_npc'
         })
 
-        const recepcionist = new Recepcionist({
+        this.recepcionist = new Recepcionist({
             scene: this,
             x: 690,
             y: 205,
@@ -97,21 +97,20 @@ export default class Demo extends Phaser.Scene{
         })
 
         const NPCs = [
-            rhGirl,
-            recepcionist
+            this.rhGirl,
+            this.recepcionist
         ]
 
         NPCs.forEach((npcs) => {
             npcs.depth = 0
         })
 
-        recepcionist.depth = 0
         aboveLayer.depth = 1
         evenAboveLayer.depth = 2
 
         this.physics.add.group(NPCs, {}) // adiciona o grupo de NPCs para o grupo de física do jogo
-        rhGirl.body.setImmovable(true)  // deixa a RhGirl imóvel
-        recepcionist.body.setImmovable(true)  // deixa a recepcionist imóvel
+        this.rhGirl.body.setImmovable(true)  // deixa a RhGirl imóvel
+        this.recepcionist.body.setImmovable(true)  // deixa a recepcionist imóvel
         this.physics.add.collider(this.player, NPCs) // adiciona colisão entre os NPCs e o Player
 
         
@@ -170,7 +169,12 @@ export default class Demo extends Phaser.Scene{
         camera.setZoom(3.2)
         camera.startFollow(this.player)
 
-
+        this.anims.create({
+            key: 'idle',
+            frames: this.anims.generateFrameNumbers('maria', { frames: [ 0, 1, 2, 3] }),
+            frameRate: 2,
+            repeat: -1
+        })
 
         this.anims.create({
         key: 'up',
@@ -222,16 +226,6 @@ export default class Demo extends Phaser.Scene{
         // Constrain the camera so that it isn't allowed to move outside the width/height of tilemap
         camera.setBounds(0, 0, map.widthInPixels, map.heightInPixels);
 
-        //texto de ajuda no game
-        // this.bmpText = this.add.bitmapText(10, 530, 'carrier_command','Use a tecla X para interagir!', 8);
-
-        // this.bmpText.inputEnabled = true;
-
-        // // o texto some após 5 segundos
-        // setTimeout(() => {
-        //     this.bmpText.destroy()
-        // }, 5000)
-
         var saudacao = document.getElementById("mensagem")
         var bubble = document.getElementById("bubbleChat-canvas")
 
@@ -247,7 +241,8 @@ export default class Demo extends Phaser.Scene{
     }
 
     update(time: number, delta: number): void {
-               
+        this.rhGirl.anims.play('idle', true)
+              
         this.cursors = this.input.keyboard.createCursorKeys();
 
         this.clouds.tilePositionX -= 0.2;

@@ -1,4 +1,5 @@
 import { GameObjects } from "phaser";
+import config from "../../config";
 
 const {Sprite} = GameObjects
 
