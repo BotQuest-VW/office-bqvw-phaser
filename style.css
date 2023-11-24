@@ -261,6 +261,7 @@ footer{
     font-size: 20px;
     transition: ease-in all 0.1s;
     font-family: var(--pixelFont);
+    font-weight: 500;
 
     padding: 10px 20px;
     text-align: center;
@@ -285,4 +286,14 @@ footer{
     justify-content: center;
 
     opacity: 0;
+}
+
+@media (max-width: 480px){
+    footer{
+        height: 130px;
+    }
+
+    .tagGame{
+        display: none;
+    }
 }

@@ -1,7 +1,7 @@
 import Phaser, { AUTO } from 'phaser';
 
 export default {
-    type: Phaser.AUTO,
+    type: Phaser.CANVAS,
     parent: 'game',
     backgroundColor: '#3fbcef',
     pixelArt: true,

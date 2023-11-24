@@ -4,6 +4,7 @@ import { GameObjects } from 'phaser';
 import DialogBox from '../utils/DialogBox';
 import RhGirl from '../sprites/npc/RhGirl';
 import Recepcionist from '../sprites/npc/Recepcionist';
+import config from '../config';
 
 export default class Demo extends Phaser.Scene{
     constructor() {
@@ -71,6 +72,43 @@ export default class Demo extends Phaser.Scene{
 
         // parallax
         this.clouds = this.add.tileSprite(0, 0, 2000, 1800, "clouds")
+
+
+        // mudança da cor do céu de acordo com o horário
+        var currentTime = new Date().getHours();
+
+        if(currentTime >= 0 && currentTime < 5){
+            console.log('0')
+            this.cameras.main.setBackgroundColor("092f4d")
+
+        }else if(currentTime >= 5 && currentTime < 7){
+            console.log('5')
+            this.cameras.main.setBackgroundColor("ebb55e")
+
+        } else if(currentTime >= 7 && currentTime < 10){
+            console.log('7')
+            this.cameras.main.setBackgroundColor("288ffc")
+
+        } else if(currentTime >= 10 && currentTime < 16){
+            console.log('10')
+            this.cameras.main.setBackgroundColor("3fbcef") // padrão azul
+
+        } else if(currentTime >= 16 && currentTime < 18){
+            console.log('16')
+            this.cameras.main.setBackgroundColor("115296")
+
+        } else if(currentTime >= 18 && currentTime < 19){
+            console.log('18')
+            this.cameras.main.setBackgroundColor("093563")
+
+        } else{
+            console.log('20')
+            this.cameras.main.setBackgroundColor("062a4f")
+        }
+
+        // media query do game
+        
+
 
         const indoor = map.addTilesetImage('indoor', 'indoor');
 
@@ -274,12 +312,19 @@ export default class Demo extends Phaser.Scene{
     }
 
     update(time: number, delta: number): void {
-        this.rhGirl.anims.play('idle-maria', true)
-        this.recepcionist.anims.play('idle-recep', true)
+        this.rhGirl.anims.play('idle-maria', true) // play na animação parada da rh
+        this.recepcionist.anims.play('idle-recep', true) // play na animação parada da recepcionista
               
         this.cursors = this.input.keyboard.createCursorKeys();
 
-        this.clouds.tilePositionX -= 0.2;
+        this.clouds.tilePositionX -= 0.2 // movimento do background
+
+        // background de acordo com o horário
+        // var currentTime = new Date().getHours();
+        // if(currentTime <= 6 && currentTime < 12 ){
+
+        // }
+
 
         if (this.cursors.left.isDown) {
         this.player.setVelocityX(-160);
@@ -422,8 +467,6 @@ export default class Demo extends Phaser.Scene{
 
             this.bubbleChatRecep!.style.opacity = "1" // bubbleChat aparece
             this.textRecep!.innerHTML = "Olá! Sou a recepcionista, você está no andar de Recursos Humanos. Caso precise de ajuda, entre na sala a direita e fale com Maria."
-
-
         } else if (!embedded_reception){
             this.bubbleChatRecep!.style.opacity = "0" // bubbleChat some
         }
