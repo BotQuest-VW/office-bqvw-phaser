@@ -3,6 +3,7 @@
   <head>
     <title>BQVW Game</title>
     <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1" name="viewport" />
     <script type="module" src="/src/index.ts"></script>
     <link rel="icon" type="image/svg+xml" href="https://firebasestorage.googleapis.com/v0/b/bqvw-bc2fc.appspot.com/o/bqvw_icon.png?alt=media&token=996847ae-6618-4371-b926-bbdb97f2492d" />
     <link rel="stylesheet" href="/style.css">
@@ -26,19 +27,17 @@
 
       <!-- saudação do ínicio -->
       <section id="bubbleChat-container">
-        <div id="bubbleChat-canvas">
           <div id="bubbleChat-pixel">
-            <p id="mensagem" class="textline anim-typewriter">
-              Seja bem-vindo ao BQVW Game! Movimente-se com ⬆️⬇️⬅️➡️ e ❌ para interagir.
+            <p id="mensagem" class="textline">
+              Seja bem-vindo ao BQVW Game! <br >Movimente-se com ⬆️⬇️⬅️➡️ e ❌ para interagir.
             </p>
           </div>
-        </div>
       </section>
 
       <!-- balão de ajuda para interação, aparece ao entrar em zona com interação -->
       <section id="help-bubble">
         <div>
-          <p>Aperte a tecla <img style="width: 20px; margin: 0px 10px;" src="/assets/x-tecla.png" alt=""> para interagir.</p>
+          <p id="help-text">Aperte a tecla <img style="width: 20px; margin: 0px 10px;" src="/assets/x-tecla.png" alt=""> para interagir.</p>
         </div>
       </section>
 
@@ -54,6 +53,17 @@
           <div id="dialog">
             <p id="dialog-mensagem"></p>
           </div>
+      </section>
+
+      <section id="mobile-control">
+        <div class="left">
+          <img src="https://firebasestorage.googleapis.com/v0/b/bqvw-bc2fc.appspot.com/o/_game%2Fleft.png?alt=media&token=e92dfb24-2a65-478d-87df-3414db3c975e" alt="Seta esquerda">
+          <img src="https://firebasestorage.googleapis.com/v0/b/bqvw-bc2fc.appspot.com/o/_game%2Fright.png?alt=media&token=8b042964-e03a-41fa-bdac-b65269ee1f59" alt="Seta direita">
+        </div>
+        <div class="right">
+          <img src="https://firebasestorage.googleapis.com/v0/b/bqvw-bc2fc.appspot.com/o/_game%2Fup.png?alt=media&token=6d499ee4-030c-445f-ab6e-78008273fca0" alt="Seta cima">
+          <img src="https://firebasestorage.googleapis.com/v0/b/bqvw-bc2fc.appspot.com/o/_game%2Fdown.png?alt=media&token=b4b94662-07e2-4ed4-97a3-5b27d97bb6d2" alt="Seta baixo">
+        </div>
       </section>
 
       <footer>

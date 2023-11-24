@@ -42,7 +42,7 @@ footer{
 
 footer{
     position: absolute;
-    width: 100vw;
+    width: 100%;
     bottom: 0;
 }
 
@@ -74,8 +74,9 @@ footer{
     position: relative;
     display: flex;
     align-items: center;
-    width: 20%;
+    /* width: 20%; */
     justify-content: space-between;
+    gap: 10px;
 }
 
 .user img{
@@ -177,29 +178,16 @@ footer{
     width: 100vw;
     height: 100px;
 
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-#bubbleChat-canvas{
-    position: relative;
-    width: 70%;
-    height: 80%;
-
     display: none;
-    flex-direction: column;
-    justify-content: center;
     align-items: center;
+    justify-content: center;
 }
 
 /* config bubblechat onde aparece o texto */
 #bubbleChat-pixel{
     font-family: var(--pixelFont);
-    width: 100%;
-    height: 65%;
 
-    padding: 5px;
+    padding: 5px 10px;
     text-align: center;
     background: var(--branco);
 
@@ -215,24 +203,15 @@ footer{
 
 .textline{
     position: relative;
-    width: 40em;
+    /* width: 40em; */
     white-space: nowrap;
     overflow: hidden; 
+    animation: typewriter 4s steps(44) 1s 1 normal both;
 }
-
-.anim-typewriter{
-    animation: typewriter 4s steps(44) 1s 1 normal both,
-                blinkTextCursor 500ms steps(44) infinite normal;
-}
-
 
 @keyframes typewriter{
     from{width: 0;}
-    to{width: 40em;}
-}
-@keyframes blinkTextCursor{
-    from{border-right-color: rgba(255,255,255,.75);}
-    to{border-right-color: transparent;}
+    to{width: 27em;}
 }
 
 
@@ -251,14 +230,15 @@ footer{
 
     position: absolute;
     left: 20px;
-    bottom: 100px;
+    top: 32px;
 
     opacity: 0;
 }
 
 #dialog,
 #dialog-recep{
-    font-size: 20px;
+    margin: 0 30px;
+    font-size: 1.3vw;
     transition: ease-in all 0.1s;
     font-family: var(--pixelFont);
     font-weight: 500;
@@ -286,4 +266,100 @@ footer{
     justify-content: center;
 
     opacity: 0;
+}
+
+#mobile-control{
+    position: absolute;
+    bottom: 100px;
+    width: 100vw;
+    padding: 0 30px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    display: none;
+}
+
+.right{
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+}
+
+@media (max-width: 550px){
+    #dialog,
+    #dialog-recep{
+        font-size: 1rem;
+    }
+
+    #mensagem{
+        font-size: 1rem;
+        white-space: pre;
+    }
+
+}
+
+@media (max-width: 779px){
+    #dialog,
+    #dialog-recep,
+    #bubbleChat-pixel p{
+        font-size: 1rem;
+    }
+}
+
+@media (max-width: 780px){
+    footer{
+        height: 100px;
+        padding: 5px 60px;
+    }
+
+    .tagGame{
+        display: none;
+    }
+
+    .tagUser{
+        width: 100%;
+    }
+
+    .linhavertical{
+        display: none;
+    }
+
+    .user img{
+        left: 0px;
+    }
+
+    .user span{
+        padding-left: 50px;
+    }
+
+    #dialog,
+    #dialog-recep,
+    #bubbleChat-pixel p{
+        font-size: 1rem;
+    }
+}
+
+@media (max-width: 900px){
+    #bubbleChat-pixel p{
+        font-size: 1rem;
+    }
+
+    @keyframes typewriter{
+        from{width: 0;}
+        to{width: 27em;}
+    }
+
+    #dialog-container,
+    #dialog-container-recep{
+        bottom: 215px;
+    }
+}
+
+@media (max-width: 1024px){
+    #dialog,
+    #dialog-recep,
+    #bubbleChat-pixel p{
+        font-size: 1rem;
+    }
 }

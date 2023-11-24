@@ -43,6 +43,12 @@ export default class Demo extends Phaser.Scene{
     textRecep = document.getElementById("dialog-mensagem-recep")
     bubbleChatRecep = document.getElementById("dialog-container-recep")
 
+    // identifica quando o máximo da tela for 900px
+    mobile = window.matchMedia("(max-width: 900px)")
+
+    // controles
+    mobileControl = document.getElementById("mobile-control")
+
     
     preload(): void {
         this.load.image("indoor", "../../assets/tilesets/tileset_bqvw_32x-indoor.png")
@@ -298,9 +304,11 @@ export default class Demo extends Phaser.Scene{
         camera.setBounds(0, 0, map.widthInPixels, map.heightInPixels);
 
         var saudacao = document.getElementById("mensagem")
-        var bubble = document.getElementById("bubbleChat-canvas")
+        var bubble = document.getElementById("bubbleChat-container")
+
 
         setTimeout(() => {
+            saudacao!.innerHTML = "Bem-vindo ao BQVW Game! <br >Movimente-se com as teclas que aparecerão na tela."
             bubble!.style.display = 'flex'
         }, 1000)
 
@@ -308,6 +316,7 @@ export default class Demo extends Phaser.Scene{
             saudacao!.remove()
 
             bubble!.style.display = 'none'
+            this.mobileControl!.style.display = 'flex'
         }, 10000)
     }
 
@@ -411,13 +420,8 @@ export default class Demo extends Phaser.Scene{
         this.player.body.velocity.normalize().scale(speed);
 
 
-        // criação zona de interação do rh
-        var embedded = this.zone.body.embedded // verifica se tem algo dentro da zona, no caso, o player
         
-        // criação zona de interação do rh
-        var embedded_reception = this.zone_reception.body.embedded // verifica se tem algo dentro da zona, no caso, o player
-       
-
+        
         // FUNÇÃO COM O PLAYER DENTRO DA ZONA, SEM CLIQUES
         // if (embedded) {
         //     console.log("entra")
@@ -433,6 +437,13 @@ export default class Demo extends Phaser.Scene{
         // this.zone.body.debugBodyColor = this.zone.body.touching.none ? 0x00ffff : 0xffff00;
         // no debug consigo visualizar melhor quando o player toca a zona
 
+
+        // criação zona de interação do rh
+        var embedded = this.zone.body.embedded // verifica se tem algo dentro da zona, no caso, o player
+        
+        // criação zona de interação do rh
+        var embedded_reception = this.zone_reception.body.embedded // verifica se tem algo dentro da zona, no caso, o player
+
         // função com interação X para abrir chat PERTO do NPC
         if(embedded && this.actionKey.isDown){
             console.log("FOI KARALHO")
@@ -440,7 +451,7 @@ export default class Demo extends Phaser.Scene{
             var caixa = document.getElementById("overlay-chat")
             caixa!.style.opacity = "1" // o overlay aparece
 
-            this.popup!.style.display = "none" // o overlay sai
+            this.popup!.style.display = "none" // o help bubble sai
             this.bubbleChat!.style.display = "none" // bubbleChat sai
         }
 
@@ -448,15 +459,23 @@ export default class Demo extends Phaser.Scene{
             this.rhGirl.setTexture('maria-talk') // muda a textura para a que tem o balãozinho
             this.rhGirl.anims.play('talking-maria', true)
 
+            this.popup!.style.opacity = "1" // o help bubble aparece
 
-            this.popup!.style.opacity = "1" // o overlay aparece
+ 
+            // o help bubble se ajuste no mobile
+            if(this.mobile.matches){
+                var helpText = document.getElementById("help-text")
+                helpText!.innerHTML = "Toque na Maria para interagir."
+            }
+
+
             this.bubbleChat!.style.opacity = "1" // bubbleChat aparece
             this.text!.innerHTML = "Olá! Sou a Maria, faço parte do RH. Do que precisa hoje?"
             }
         else if (!embedded) {
-            this.popup!.style.opacity = "0" // o overlay some
+            this.popup!.style.opacity = "0" // o help bubble some
             this.bubbleChat!.style.opacity = "0" // bubbleChat some
-            this.popup!.style.display = "flex" // o overlay volta
+            this.popup!.style.display = "flex" // o help bubble volta
             this.bubbleChat!.style.display = "flex" // bubbleChat volta
         }   
         
