@@ -308,7 +308,9 @@ export default class Demo extends Phaser.Scene{
 
 
         setTimeout(() => {
-            saudacao!.innerHTML = "Bem-vindo ao BQVW Game! <br >Movimente-se com as teclas que aparecerão na tela."
+            if(this.mobile.matches){
+                saudacao!.innerHTML = "Bem-vindo ao BQVW Game! <br >Movimente-se com as teclas que aparecerão na tela."
+            }
             bubble!.style.display = 'flex'
         }, 1000)
 
@@ -316,7 +318,9 @@ export default class Demo extends Phaser.Scene{
             saudacao!.remove()
 
             bubble!.style.display = 'none'
-            this.mobileControl!.style.display = 'flex'
+            if(this.mobile.matches){
+                this.mobileControl!.style.display = 'flex'
+            }
         }, 10000)
     }
 
