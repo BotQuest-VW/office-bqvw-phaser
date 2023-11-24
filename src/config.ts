@@ -1,11 +1,12 @@
 import Phaser, { AUTO } from 'phaser';
 
 export default {
-    type: Phaser.CANVAS,
+    type: Phaser.WEBGL,
     parent: 'game',
     backgroundColor: '#3fbcef',
     pixelArt: true,
-    width: 1570,    
+    width: window.innerWidth,  
+    height: window.innerHeight,  
     scale: {      
         mode: Phaser.Scale.FIT,
         autoCenter: Phaser.Scale.CENTER_HORIZONTALLY

@@ -287,13 +287,3 @@ footer{
 
     opacity: 0;
 }
-
-@media (max-width: 480px){
-    footer{
-        height: 130px;
-    }
-
-    .tagGame{
-        display: none;
-    }
-}
