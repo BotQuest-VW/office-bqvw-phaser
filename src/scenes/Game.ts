@@ -495,4 +495,6 @@ export default class Demo extends Phaser.Scene{
             this.bubbleChatRecep!.style.opacity = "0" // bubbleChat some
         }
     }
+
+
 }
