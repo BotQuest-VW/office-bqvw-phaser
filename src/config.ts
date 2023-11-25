@@ -5,10 +5,12 @@ export default {
     parent: 'game',
     backgroundColor: '#3fbcef',
     pixelArt: true,
-    width: window.innerWidth,  
-    height: window.innerHeight,  
+    width: window.innerWidth,
+    height: window.innerHeight,
     scale: {      
-        mode: Phaser.Scale.FIT,
+        mode: Phaser.Scale.NONE,
+        width: 2000,  
+        heigth: window.innerHeight,
         autoCenter: Phaser.Scale.CENTER_HORIZONTALLY
     },
     physics: {

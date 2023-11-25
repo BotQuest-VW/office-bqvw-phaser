@@ -46,6 +46,9 @@ export default class Demo extends Phaser.Scene{
     // identifica quando o máximo da tela for 900px
     mobile = window.matchMedia("(max-width: 900px)")
 
+    // query desktop
+    desktop = window.matchMedia("(min-width: 1024px)")
+
     // controles
     mobileControl = document.getElementById("mobile-control")
 
@@ -110,11 +113,7 @@ export default class Demo extends Phaser.Scene{
         } else{
             console.log('20')
             this.cameras.main.setBackgroundColor("062a4f")
-        }
-
-        // media query do game
-        
-
+        }       
 
         const indoor = map.addTilesetImage('indoor', 'indoor');
 
@@ -301,7 +300,9 @@ export default class Demo extends Phaser.Scene{
         this.dialogo = new DialogBox(this, this.sys.canvas.width, this.sys.canvas.height)
 
         // Constrain the camera so that it isn't allowed to move outside the width/height of tilemap
-        camera.setBounds(0, 0, map.widthInPixels, map.heightInPixels);
+        if(this.desktop.matches){
+            camera.setBounds(0, 0, map.widthInPixels, map.heightInPixels);
+        }
 
         var saudacao = document.getElementById("mensagem")
         var bubble = document.getElementById("bubbleChat-container")
@@ -309,7 +310,7 @@ export default class Demo extends Phaser.Scene{
 
         setTimeout(() => {
             if(this.mobile.matches){
-                saudacao!.innerHTML = "Bem-vindo ao BQVW Game! <br >Movimente-se com as teclas que aparecerão na tela."
+                saudacao!.innerHTML = "Bem-vindo ao BQVW Game! <br >Movimente-se com as teclas <br > que aparecerão na tela."
             }
             bubble!.style.display = 'flex'
         }, 1000)
