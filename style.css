@@ -395,7 +395,12 @@ footer{
 @media screen and (max-width: 900px){
     #dialog-container,
     #dialog-container-recep{
-        bottom: 215px;
+        bottom: 230px;
+    }
+
+    #dialog,
+    #dialog-recep{
+        margin-right: 30vw;
     }
 }
 
