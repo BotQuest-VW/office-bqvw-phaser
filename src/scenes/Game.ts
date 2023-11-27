@@ -5,6 +5,11 @@ import DialogBox from '../utils/DialogBox';
 import RhGirl from '../sprites/npc/RhGirl';
 import Recepcionist from '../sprites/npc/Recepcionist';
 import config from '../config';
+import Tv from '../sprites/misc/Tv';
+
+export function upControl(){
+    console.log("teste")
+}
 
 export default class Demo extends Phaser.Scene{
     constructor() {
@@ -49,13 +54,19 @@ export default class Demo extends Phaser.Scene{
     // query desktop
     desktop = window.matchMedia("(min-width: 1024px)")
 
+    // tv
+    tv:any
+
     // controles
     mobileControl = document.getElementById("mobile-control")
 
     
     preload(): void {
         this.load.image("indoor", "../../assets/tilesets/tileset_bqvw_32x-indoor.png")
-        this.load.tilemapTiledJSON("map", "../../assets/tilemaps/bqvw-map.json");     
+        this.load.tilemapTiledJSON("map", "../../assets/tilemaps/bqvw-map.json");   
+        
+        this.load.spritesheet('tv', '/assets/sprite-tv.png',
+        {frameWidth: 58, frameHeight: 41})
 
         this.load.spritesheet('maria', 'assets/maria-sprite-sheet.png',
         {frameWidth: 48, frameHeight: 48})
@@ -126,6 +137,14 @@ export default class Demo extends Phaser.Scene{
         this.player.body.setCollideWorldBounds(true)
         const aboveLayer = map.createLayer("AcimaPlayer", indoor);
         const evenAboveLayer = map.createLayer("paredeTetos", indoor);
+
+        this.tv = new Tv({
+            // criação da tv animada
+            scene: this,
+            x: 320,
+            y: 190,
+            key: 'tv'
+        })
 
 
         this.rhGirl = new RhGirl({
@@ -250,6 +269,14 @@ export default class Demo extends Phaser.Scene{
             repeat: -1
         })
 
+        // ANIMAÇÃO TV
+        this.anims.create({
+            key: 'tv',
+            frames: this.anims.generateFrameNumbers('tv', {start: 0, end: 4}),
+            frameRate: 2,
+            repeat: -1
+        })
+
 
 
         this.anims.create({
@@ -328,17 +355,11 @@ export default class Demo extends Phaser.Scene{
     update(time: number, delta: number): void {
         this.rhGirl.anims.play('idle-maria', true) // play na animação parada da rh
         this.recepcionist.anims.play('idle-recep', true) // play na animação parada da recepcionista
+        this.tv.anims.play('tv', true)
               
         this.cursors = this.input.keyboard.createCursorKeys();
 
         this.clouds.tilePositionX -= 0.2 // movimento do background
-
-        // background de acordo com o horário
-        // var currentTime = new Date().getHours();
-        // if(currentTime <= 6 && currentTime < 12 ){
-
-        // }
-
 
         if (this.cursors.left.isDown) {
         this.player.setVelocityX(-160);
