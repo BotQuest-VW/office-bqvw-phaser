@@ -85,6 +85,7 @@ export default class Demo extends Phaser.Scene {
     }
 
     create(): void {
+        
 
         const btnUp = document.getElementById('btn-up');
         const btnDown = document.getElementById('btn-down');
@@ -161,6 +162,15 @@ export default class Demo extends Phaser.Scene {
             y: 295,
             key: 'rh_npc'
         })
+
+        this.rhGirl.setInteractive();
+
+        this.rhGirl.on('pointerdown', () => {
+            const iframe = document.querySelector('iframe');
+            iframe.src = 'https://copilotstudio.microsoft.com/environments/Default-b1051c4b-3b94-41ab-9441-e73a72342fdd/bots/cr6ae_blu/webchat?__version__=2'; // 
+            const overlay = document.getElementById("overlay-chat");
+            overlay.style.opacity = "1"; 
+        });
 
         this.recepcionist = new Recepcionist({
             scene: this,
