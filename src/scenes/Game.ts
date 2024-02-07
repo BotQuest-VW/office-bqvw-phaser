@@ -91,7 +91,6 @@ export default class Demo extends Phaser.Scene {
         const btnLeft = document.getElementById('btn-left');
         const btnRight = document.getElementById('btn-right');
 
-        // Adicione os ouvintes de evento de clique aos botões
         btnUp.addEventListener('click', () => this.movePlayer('up'));
         btnDown.addEventListener('click', () => this.movePlayer('down'));
         btnLeft.addEventListener('click', () => this.movePlayer('left'));
@@ -509,7 +508,7 @@ export default class Demo extends Phaser.Scene {
 
     movePlayer(direction: string) {
         // velocidade do personagem ao clicar (distancia)
-        const playerSpeed = 20;
+        const playerSpeed = 1500;
 
         switch (direction) {
             case 'up':
@@ -530,20 +529,19 @@ export default class Demo extends Phaser.Scene {
     }
 
     movePlayerUp(speed: number) {
-        this.player.y -= speed;
+        this.player.setVelocityY(-speed);
     }
 
     movePlayerDown(speed: number) {
-        this.player.y += speed;
+        this.player.setVelocityY(speed);
     }
 
     movePlayerLeft(speed: number) {
-        this.player.x -= speed;
+        this.player.setVelocityX(-speed);
     }
 
     movePlayerRight(speed: number) {
-        this.player.x += speed;
+        this.player.setVelocityX(speed);
     }
-
 
 }

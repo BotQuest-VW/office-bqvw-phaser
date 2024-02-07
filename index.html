@@ -1,97 +1,121 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <title>BQVW Game</title>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <script type="module" src="/src/index.ts"></script>
-    <link rel="icon" type="image/svg+xml" href="https://firebasestorage.googleapis.com/v0/b/bqvw-bc2fc.appspot.com/o/bqvw_icon.png?alt=media&token=996847ae-6618-4371-b926-bbdb97f2492d" />
-    <link rel="stylesheet" href="/style.css">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Pixelify+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">  </head>
-    <link href="/src/scenes/Game.ts" rel="import" />
-    <script defer>      
-      function closeOverlay(){
-          const overlay = document.getElementById("overlay-chat")
-          overlay.style.opacity = "0"
-      }
-    </script>
-  <body>
-    <div id="game">
-      <section id="overlay-chat">
-        <div id="container-overlay">
-          <!-- O CHAT PODE VIR NESSA DIV -->
 
-          <iframe src="https://copilotstudio.microsoft.com/environments/Default-b1051c4b-3b94-41ab-9441-e73a72342fdd/bots/cr6ae_blu/webchat?__version__=2
+<head>
+  <title>BQVW Game</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <script type="module" src="/src/index.ts"></script>
+  <link rel="icon" type="image/svg+xml"
+    href="https://firebasestorage.googleapis.com/v0/b/bqvw-bc2fc.appspot.com/o/bqvw_icon.png?alt=media&token=996847ae-6618-4371-b926-bbdb97f2492d" />
+  <link rel="stylesheet" href="/style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Pixelify+Sans:wght@400;500;600;700&display=swap"
+    rel="stylesheet">
+</head>
+<link href="/src/scenes/Game.ts" rel="import" />
+<script defer>
+  function closeOverlay() {
+    const overlay = document.getElementById("overlay-chat")
+    overlay.style.opacity = "0"
+  }
+</script>
+
+<body>
+  <div id="game">
+    <section id="overlay-chat">
+      <div id="container-overlay">
+        <!-- O CHAT PODE VIR NESSA DIV -->
+
+        <iframe src="https://copilotstudio.microsoft.com/environments/Default-b1051c4b-3b94-41ab-9441-e73a72342fdd/bots/cr6ae_blu/webchat?__version__=2
           " frameborder="0" style="width: 100%; height: 100%;"></iframe>
 
-          <img onclick="closeOverlay()" class="closeOverlay" src="https://firebasestorage.googleapis.com/v0/b/bqvw-bc2fc.appspot.com/o/close_icon.png?alt=media&token=a3927af4-33ef-440e-b3e3-48750726bf21" alt="">
-        </div>
-      </section>
-
-      <!-- saudação do ínicio -->
-      <section id="bubbleChat-container">
-          <div id="bubbleChat-pixel">
-            <p id="mensagem" class="textline">
-              Seja bem-vindo ao BQVW Game! <br >Movimente-se com ⬆️⬇️⬅️➡️ e ❌ para interagir.
-            </p>
-          </div>
-      </section>
-
-      <!-- balão de ajuda para interação, aparece ao entrar em zona com interação -->
-      <section id="help-bubble">
-        <div>
-          <p id="help-text">Aperte a tecla <img style="width: 20px; margin: 0px 10px;" src="/assets/x-tecla.png" alt=""> para interagir.</p>
-        </div>
-      </section>
-
-      <!-- dialogo de interação recepção-->
-      <section id="dialog-container-recep">
-          <div id="dialog-recep">
-            <p id="dialog-mensagem-recep"></p>
-          </div>
-      </section>
-
-      <!-- dialogo de interação rh-->
-      <section id="dialog-container">
-          <div id="dialog">
-            <p id="dialog-mensagem"></p>
-          </div>
-      </section>
-
-      <section id="mobile-control">
-        <div class="up">
-            <img id="btn-up" src="https://firebasestorage.googleapis.com/v0/b/bqvw-bc2fc.appspot.com/o/_game%2Fup.png?alt=media&token=6d499ee4-030c-445f-ab6e-78008273fca0" alt="Seta cima">
-        </div>
-        <div class="down">
-            <img id="btn-left" src="https://firebasestorage.googleapis.com/v0/b/bqvw-bc2fc.appspot.com/o/_game%2Fleft.png?alt=media&token=e92dfb24-2a65-478d-87df-3414db3c975e" alt="Seta esquerda">
-            <img id="btn-down" src="https://firebasestorage.googleapis.com/v0/b/bqvw-bc2fc.appspot.com/o/_game%2Fdown.png?alt=media&token=b4b94662-07e2-4ed4-97a3-5b27d97bb6d2" alt="Seta baixo">
-            <img id="btn-right" src="https://firebasestorage.googleapis.com/v0/b/bqvw-bc2fc.appspot.com/o/_game%2Fright.png?alt=media&token=8b042964-e03a-41fa-bdac-b65269ee1f59" alt="Seta direita">
-        </div>
+        <img onclick="closeOverlay()" class="closeOverlay"
+          src="https://firebasestorage.googleapis.com/v0/b/bqvw-bc2fc.appspot.com/o/close_icon.png?alt=media&token=a3927af4-33ef-440e-b3e3-48750726bf21"
+          alt="">
+      </div>
     </section>
-    
 
-      <footer>
-        <div class="tagGame">
-          <img src="https://firebasestorage.googleapis.com/v0/b/bqvw-bc2fc.appspot.com/o/_game%2Fbot_icon.png?alt=media&token=569d7a3c-7886-418c-99cc-d131b38544cc" alt="">
-          <span>BQVW Game</span>
-        </div>
-        <div class="tagUser">
-            <div class="user">
-              <img src="https://firebasestorage.googleapis.com/v0/b/bqvw-bc2fc.appspot.com/o/area-colaborador%2Favatar%201.png?alt=media&token=3c12bfe2-90cc-45f4-bae4-c720b79df953" alt="">
-              <span>Nome do usuário</span>
-            </div>
-            <div class="linhavertical"></div>
-            <a class="botao_sair" href="#">
-              <div>
-                <img class="img" src="https://firebasestorage.googleapis.com/v0/b/bqvw-bc2fc.appspot.com/o/_game%2Fsair-de-casa.png?alt=media&token=8ecbdf0d-870b-4b54-b857-2ae8436f86af" alt="">
-              </div>
-              <span class="outGame">Sair do game</span>
-            </a>
-        </div>
-      </footer>
+    <!-- saudação do ínicio -->
+    <section id="bubbleChat-container">
+      <div id="bubbleChat-pixel">
+        <p id="mensagem" class="textline">
+          Seja bem-vindo ao BQVW Game! <br>Movimente-se com ⬆️⬇️⬅️➡️ e ❌ para interagir.
+        </p>
+      </div>
+    </section>
 
-    </div>
-  </body>
+    <!-- balão de ajuda para interação, aparece ao entrar em zona com interação -->
+    <section id="help-bubble">
+      <div>
+        <p id="help-text">Aperte a tecla <img style="width: 20px; margin: 0px 10px;" src="/assets/x-tecla.png" alt="">
+          para interagir.</p>
+      </div>
+    </section>
+
+    <!-- dialogo de interação recepção-->
+    <section id="dialog-container-recep">
+      <div id="dialog-recep">
+        <p id="dialog-mensagem-recep"></p>
+      </div>
+    </section>
+
+    <!-- dialogo de interação rh-->
+    <section id="dialog-container">
+      <div id="dialog">
+        <p id="dialog-mensagem"></p>
+      </div>
+    </section>
+
+    <section id="mobile-control">
+      <div class="up">
+        <img id="btn-up"
+          src="https://firebasestorage.googleapis.com/v0/b/bqvw-bc2fc.appspot.com/o/_game%2Fup.png?alt=media&token=6d499ee4-030c-445f-ab6e-78008273fca0"
+          alt="Seta cima">
+      </div>
+      <div class="down">
+        <img id="btn-left"
+          src="https://firebasestorage.googleapis.com/v0/b/bqvw-bc2fc.appspot.com/o/_game%2Fleft.png?alt=media&token=e92dfb24-2a65-478d-87df-3414db3c975e"
+          alt="Seta esquerda">
+        <img id="btn-down"
+          src="https://firebasestorage.googleapis.com/v0/b/bqvw-bc2fc.appspot.com/o/_game%2Fdown.png?alt=media&token=b4b94662-07e2-4ed4-97a3-5b27d97bb6d2"
+          alt="Seta baixo">
+        <img id="btn-right"
+          src="https://firebasestorage.googleapis.com/v0/b/bqvw-bc2fc.appspot.com/o/_game%2Fright.png?alt=media&token=8b042964-e03a-41fa-bdac-b65269ee1f59"
+          alt="Seta direita">
+      </div>
+    </section>
+
+
+    <footer>
+      <div class="tagGame">
+        <img
+          src="https://firebasestorage.googleapis.com/v0/b/bqvw-bc2fc.appspot.com/o/_game%2Fbot_icon.png?alt=media&token=569d7a3c-7886-418c-99cc-d131b38544cc"
+          alt="">
+        <span>BQVW Game</span>
+      </div>
+      <div class="tagUser">
+        <div class="user">
+          <img
+            src="https://firebasestorage.googleapis.com/v0/b/bqvw-bc2fc.appspot.com/o/area-colaborador%2Favatar%201.png?alt=media&token=3c12bfe2-90cc-45f4-bae4-c720b79df953"
+            alt="">
+          <span>Nome do usuário</span>
+        </div>
+        <div class="linhavertical"></div>
+        <a class="botao_sair" href="#">
+          <div>
+            <img class="img"
+              src="https://firebasestorage.googleapis.com/v0/b/bqvw-bc2fc.appspot.com/o/_game%2Fsair-de-casa.png?alt=media&token=8ecbdf0d-870b-4b54-b857-2ae8436f86af"
+              alt="">
+          </div>
+          <span class="outGame">Sair do game</span>
+        </a>
+      </div>
+    </footer>
+
+  </div>
+</body>
+
 </html>
