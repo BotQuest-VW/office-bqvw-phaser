@@ -59,10 +59,10 @@ export default class Demo extends Phaser.Scene {
     mobileControl = document.getElementById("mobile-control")
 
     // configurando as funcoes de movimento
-    movePlayerUp : any
-    movePlayerDown : any
-    movePlayerLeft : any
-    movePlayerRight : any
+    movePlayerUp: any
+    movePlayerDown: any
+    movePlayerLeft: any
+    movePlayerRight: any
 
     // Capturando os itens de tela
     btnUp = document.getElementById('btn-up');
@@ -97,7 +97,7 @@ export default class Demo extends Phaser.Scene {
     }
 
     create(): void {
-    
+
         // this.btnUp?.addEventListener('click', () => this.movePlayer('up'));
         // this.btnDown?.addEventListener('click', () => this.movePlayer('down'));
         // this.btnLeft?.addEventListener('click', () => this.movePlayer('left'));
@@ -178,7 +178,7 @@ export default class Demo extends Phaser.Scene {
             const iframe = document.querySelector('iframe');
             iframe.src = 'https://copilotstudio.microsoft.com/environments/Default-b1051c4b-3b94-41ab-9441-e73a72342fdd/bots/cr6ae_blu/webchat?__version__=2'; // 
             const overlay = document.getElementById("overlay-chat");
-            overlay.style.opacity = "1"; 
+            overlay.style.opacity = "3";
 
             // Sumindo com os botoes
             this.mobileControl!.style.display = 'none'
@@ -215,6 +215,10 @@ export default class Demo extends Phaser.Scene {
         this.physics.world.enable(this.zone, 0); // (0) DYNAMIC (1) STATIC // não sei, peguei na net e funcionou ಠ_ಠ
         this.zone.body.setAllowGravity(false); // gravidade para FALSO
         this.zone.body.moves = false; // sem movimentação
+
+        let circle = new Phaser.Geom.Circle(100, 100, 100);
+        this.rhGirl.setInteractive(circle, Phaser.Geom.Circle.Contains);
+        // this.zone = this.rhGirl.setInteractive(50, {})
 
         this.physics.add.overlap(this.player, this.zone); // adiciona um overlap (passar por) entre o player e a zona
 
@@ -315,7 +319,7 @@ export default class Demo extends Phaser.Scene {
             frameRate: 10,
             repeat: -1
         });
-    
+
 
         this.anims.create({
             key: 'down',
