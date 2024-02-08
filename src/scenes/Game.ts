@@ -165,7 +165,7 @@ export default class Demo extends Phaser.Scene {
 
         this.rhGirl.setInteractive();
 
-        this.rhGirl.on('pointerdown', () => {
+        this.rhGirl.on('pointerup', () => {
             const iframe = document.querySelector('iframe');
             iframe.src = 'https://copilotstudio.microsoft.com/environments/Default-b1051c4b-3b94-41ab-9441-e73a72342fdd/bots/cr6ae_blu/webchat?__version__=2'; // 
             const overlay = document.getElementById("overlay-chat");
@@ -199,7 +199,7 @@ export default class Demo extends Phaser.Scene {
 
 
         // criação da área de interação entre a RhGirl e o Player (total no phaser, não utilizei npclayer no tiled)
-        this.zone = this.add.zone(380, 350, 500, 500) // adiciona uma zona invisível, params: x, y, width, heigth
+        this.zone = this.add.zone(380, 350, 50, 150) // adiciona uma zona invisível, params: x, y, width, heigth
         this.physics.world.enable(this.zone, 0); // (0) DYNAMIC (1) STATIC // não sei, peguei na net e funcionou ಠ_ಠ
         this.zone.body.setAllowGravity(false); // gravidade para FALSO
         this.zone.body.moves = false; // sem movimentação
