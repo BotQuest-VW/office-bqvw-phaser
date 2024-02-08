@@ -302,6 +302,7 @@ export default class Demo extends Phaser.Scene {
             frameRate: 10,
             repeat: -1
         });
+    
 
         this.anims.create({
             key: 'down',
@@ -523,8 +524,6 @@ export default class Demo extends Phaser.Scene {
         switch (direction) {
             case 'up':
                 this.movePlayerUp(playerSpeed);
-
-                this.player.anims.play('up', true);
                 break;
             case 'down':
                 this.movePlayerDown(playerSpeed);
@@ -542,18 +541,22 @@ export default class Demo extends Phaser.Scene {
 
     movePlayerUp(speed: number) {
         this.player.setVelocityY(-speed);
+        this.player.anims.play('up', true);
     }
 
     movePlayerDown(speed: number) {
         this.player.setVelocityY(speed);
+        this.player.anims.play('down', true);
     }
 
     movePlayerLeft(speed: number) {
         this.player.setVelocityX(-speed);
+        this.player.anims.play('left', true);
     }
 
     movePlayerRight(speed: number) {
         this.player.setVelocityX(speed);
+        this.player.anims.play('right', true);
     }
 
 }
