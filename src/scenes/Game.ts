@@ -178,7 +178,7 @@ export default class Demo extends Phaser.Scene {
             const iframe = document.querySelector('iframe');
             iframe.src = 'https://copilotstudio.microsoft.com/environments/Default-b1051c4b-3b94-41ab-9441-e73a72342fdd/bots/cr6ae_blu/webchat?__version__=2'; // 
             const overlay = document.getElementById("overlay-chat");
-            overlay.style.opacity = "3";
+            overlay.style.opacity = "1";
 
             // Sumindo com os botoes
             this.mobileControl!.style.display = 'none'
@@ -216,8 +216,8 @@ export default class Demo extends Phaser.Scene {
         this.zone.body.setAllowGravity(false); // gravidade para FALSO
         this.zone.body.moves = false; // sem movimentação
 
-        let circle = new Phaser.Geom.Circle(100, 100, 100);
-        this.rhGirl.setInteractive(circle, Phaser.Geom.Circle.Contains);
+        // let circle = new Phaser.Geom.Circle(1000, 1000, 1000);
+        // this.rhGirl.setInteractive(circle, Phaser.Geom.Circle.Contains);
         // this.zone = this.rhGirl.setInteractive(50, {})
 
         this.physics.add.overlap(this.player, this.zone); // adiciona um overlap (passar por) entre o player e a zona
@@ -557,6 +557,24 @@ export default class Demo extends Phaser.Scene {
 
             this.popup!.style.display = "none" // o help bubble sai
             this.bubbleChat!.style.display = "none" // bubbleChat sai
+        }
+
+        if (embedded && this.rhGirl.addListener('pointerup', () => {
+            const iframe = document.querySelector('iframe');
+            iframe.src = 'https://copilotstudio.microsoft.com/environments/Default-b1051c4b-3b94-41ab-9441-e73a72342fdd/bots/cr6ae_blu/webchat?__version__=2';
+            const overlay = document.getElementById("overlay-chat");
+            overlay.style.opacity = "1"; 
+        
+            // Mostrando os botões novamente
+            this.showButtons();
+        })) {
+            console.log("FOI KARALHO");
+        
+            var caixa = document.getElementById("overlay-chat");
+            caixa.style.opacity = "1"; // o overlay aparece
+        
+            this.popup.style.display = "none"; // o help bubble sai
+            this.bubbleChat.style.display = "none"; // bubbleChat sai
         }
 
         if (embedded) {
