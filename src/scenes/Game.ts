@@ -518,11 +518,12 @@ export default class Demo extends Phaser.Scene {
 
     movePlayer(direction: string) {
         // velocidade do personagem ao clicar (distancia)
-        const playerSpeed = 1500;
+        const playerSpeed = 1700;
 
         switch (direction) {
             case 'up':
                 this.movePlayerUp(playerSpeed);
+
                 break;
             case 'down':
                 this.movePlayerDown(playerSpeed);
