@@ -58,6 +58,18 @@ export default class Demo extends Phaser.Scene {
     // controles
     mobileControl = document.getElementById("mobile-control")
 
+    // configurando as funcoes de movimento
+    movePlayerUp : any
+    movePlayerDown : any
+    movePlayerLeft : any
+    movePlayerRight : any
+
+    // Capturando os itens de tela
+    btnUp = document.getElementById('btn-up');
+    btnDown = document.getElementById('btn-down');
+    btnLeft = document.getElementById('btn-left');
+    btnRight = document.getElementById('btn-right');
+
 
     preload(): void {
         this.load.image("indoor", "../../assets/tilesets/tileset_bqvw_32x-indoor.png")
@@ -85,17 +97,13 @@ export default class Demo extends Phaser.Scene {
     }
 
     create(): void {
-        
+    
+        // this.btnUp?.addEventListener('click', () => this.movePlayer('up'));
+        // this.btnDown?.addEventListener('click', () => this.movePlayer('down'));
+        // this.btnLeft?.addEventListener('click', () => this.movePlayer('left'));
+        // this.btnRight?.addEventListener('click', () => this.movePlayer('right'));
+        // this.btnUp?.addEventListener('click', () => { this.movePlayerUp(1700) });
 
-        const btnUp = document.getElementById('btn-up');
-        const btnDown = document.getElementById('btn-down');
-        const btnLeft = document.getElementById('btn-left');
-        const btnRight = document.getElementById('btn-right');
-
-        btnUp.addEventListener('click', () => this.movePlayer('up'));
-        btnDown.addEventListener('click', () => this.movePlayer('down'));
-        btnLeft.addEventListener('click', () => this.movePlayer('left'));
-        btnRight.addEventListener('click', () => this.movePlayer('right'));
         const map = this.make.tilemap({ key: "map" });
 
         // parallax
@@ -170,6 +178,9 @@ export default class Demo extends Phaser.Scene {
             iframe.src = 'https://copilotstudio.microsoft.com/environments/Default-b1051c4b-3b94-41ab-9441-e73a72342fdd/bots/cr6ae_blu/webchat?__version__=2'; // 
             const overlay = document.getElementById("overlay-chat");
             overlay.style.opacity = "1"; 
+
+            // Sumindo com os botoes
+            this.mobileControl!.style.display = 'none'
         });
 
         this.recepcionist = new Recepcionist({
@@ -253,6 +264,8 @@ export default class Demo extends Phaser.Scene {
         camera.startFollow(this.player)
 
 
+        //#region criacao dos efeitos de animacao
+
         // ANIMAÇÃO RH PARADA
         this.anims.create({
             key: 'idle-maria',
@@ -293,7 +306,6 @@ export default class Demo extends Phaser.Scene {
             frameRate: 2,
             repeat: -1
         })
-
 
 
         this.anims.create({
@@ -338,6 +350,32 @@ export default class Demo extends Phaser.Scene {
             repeat: -1
         });
 
+        //#endregion
+
+        //#region declarando os clicks pelos botoes
+
+        this.movePlayerUp = (speed: number) => {
+            this.player.setVelocityY(-speed);
+            this.player.anims.play('up', true);
+        }
+
+        this.movePlayerDown = (speed: number) => {
+            this.player.setVelocityY(speed);
+            this.player.anims.play('down', true);
+        }
+
+        this.movePlayerLeft = (speed: number) => {
+            this.player.setVelocityX(-speed);
+            this.player.anims.play('left', true);
+        }
+
+        this.movePlayerRight = (speed: number) => {
+            this.player.setVelocityX(speed);
+            this.player.anims.play('right', true);
+        }
+
+        //#endregion
+
 
         this.actionKey = this.input.keyboard.addKey("x")
 
@@ -370,6 +408,30 @@ export default class Demo extends Phaser.Scene {
         }, 10000)
     }
 
+    movePlayer(direction: string) {
+        // velocidade do personagem ao clicar (distancia)
+        const playerSpeed = 1700;
+
+        switch (direction) {
+            case 'up':
+                this.movePlayerUp(playerSpeed);
+                break;
+            case 'down':
+                this.movePlayerDown(playerSpeed);
+                break;
+            case 'left':
+                this.movePlayerLeft(playerSpeed);
+                break;
+            case 'right':
+                this.movePlayerRight(playerSpeed);
+                break;
+            default:
+                break;
+        }
+    }
+
+
+    //#region declaracao dos teclados de acao
     update(time: number, delta: number): void {
         this.rhGirl.anims.play('idle-maria', true) // play na animação parada da rh
         this.recepcionist.anims.play('idle-recep', true) // play na animação parada da recepcionista
@@ -380,30 +442,41 @@ export default class Demo extends Phaser.Scene {
         this.clouds.tilePositionX -= 0.2 // movimento do background
 
         if (this.cursors.left.isDown) {
-            this.player.setVelocityX(-160);
+            // this.player.setVelocityX(-160);
 
-            this.player.anims.play('left', true);
+            // this.player.anims.play('left', true);
+            this.movePlayerLeft(160)
         }
         else if (this.cursors.right.isDown) {
-            this.player.setVelocityX(160);
+            // this.player.setVelocityX(160);
 
-            this.player.anims.play('right', true);
+            // this.player.anims.play('right', true);
+            this.movePlayerRight(160)
         }
         else if (this.cursors.up.isDown) {
-            this.player.setVelocityX(160);
+            // this.player.setVelocityX(160);
 
-            this.player.anims.play('up', true);
+            // this.player.anims.play('up', true);
+            this.movePlayerUp(160)
         }
         else if (this.cursors.down.isDown) {
-            this.player.setVelocityX(160);
+            // this.player.setVelocityX(160);
 
-            this.player.anims.play('down', true);
+            // this.player.anims.play('down', true);
+            this.movePlayerDown(160)
         }
         else {
             this.player.setVelocityX(0);
 
             this.player.anims.play('turn');
         }
+
+
+        this.btnUp?.addEventListener('click', () => { this.movePlayerUp(1700) });
+        this.btnDown?.addEventListener('click', () => { this.movePlayerDown(1700) });
+        this.btnLeft?.addEventListener('click', () => { this.movePlayerLeft(1700) });
+        this.btnRight?.addEventListener('click', () => { this.movePlayerRight(1700) });
+
 
         if (this.cursors.up.isDown && this.player.body.touching.down) {
             this.player.setVelocityY(-330);
@@ -516,47 +589,5 @@ export default class Demo extends Phaser.Scene {
             this.bubbleChatRecep!.style.opacity = "0" // bubbleChat some
         }
     }
-
-    movePlayer(direction: string) {
-        // velocidade do personagem ao clicar (distancia)
-        const playerSpeed = 1700;
-
-        switch (direction) {
-            case 'up':
-                this.movePlayerUp(playerSpeed);
-                break;
-            case 'down':
-                this.movePlayerDown(playerSpeed);
-                break;
-            case 'left':
-                this.movePlayerLeft(playerSpeed);
-                break;
-            case 'right':
-                this.movePlayerRight(playerSpeed);
-                break;
-            default:
-                break;
-        }
-    }
-
-    movePlayerUp(speed: number) {
-        this.player.setVelocityY(-speed);
-        this.player.anims.play('up', true);
-    }
-
-    movePlayerDown(speed: number) {
-        this.player.setVelocityY(speed);
-        this.player.anims.play('down', true);
-    }
-
-    movePlayerLeft(speed: number) {
-        this.player.setVelocityX(-speed);
-        this.player.anims.play('left', true);
-    }
-
-    movePlayerRight(speed: number) {
-        this.player.setVelocityX(speed);
-        this.player.anims.play('right', true);
-    }
-
+    //#endregion
 }
