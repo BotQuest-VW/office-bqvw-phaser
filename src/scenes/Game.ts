@@ -524,6 +524,7 @@ export default class Demo extends Phaser.Scene {
             case 'up':
                 this.movePlayerUp(playerSpeed);
 
+                this.player.anims.play('up', true);
                 break;
             case 'down':
                 this.movePlayerDown(playerSpeed);
