@@ -559,24 +559,6 @@ export default class Demo extends Phaser.Scene {
             this.bubbleChat!.style.display = "none" // bubbleChat sai
         }
 
-        if (embedded && this.rhGirl.addListener('pointerup', () => {
-            const iframe = document.querySelector('iframe');
-            iframe.src = 'https://copilotstudio.microsoft.com/environments/Default-b1051c4b-3b94-41ab-9441-e73a72342fdd/bots/cr6ae_blu/webchat?__version__=2';
-            const overlay = document.getElementById("overlay-chat");
-            overlay.style.opacity = "1"; 
-        
-            // Mostrando os botões novamente
-            this.showButtons();
-        })) {
-            console.log("FOI KARALHO");
-        
-            var caixa = document.getElementById("overlay-chat");
-            caixa.style.opacity = "1"; // o overlay aparece
-        
-            this.popup.style.display = "none"; // o help bubble sai
-            this.bubbleChat.style.display = "none"; // bubbleChat sai
-        }
-
         if (embedded) {
             this.rhGirl.setTexture('maria-talk') // muda a textura para a que tem o balãozinho
             this.rhGirl.anims.play('talking-maria', true)
