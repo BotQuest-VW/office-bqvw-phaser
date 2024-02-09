@@ -174,15 +174,25 @@ export default class Demo extends Phaser.Scene {
         this.rhGirl.setInteractive();
 
         this.rhGirl.on('pointerup', () => {
-            // alert('asdasdasd')
+            
             const iframe = document.querySelector('iframe');
             iframe.src = 'https://copilotstudio.microsoft.com/environments/Default-b1051c4b-3b94-41ab-9441-e73a72342fdd/bots/cr6ae_blu/webchat?__version__=2'; // 
+            
             const overlay = document.getElementById("overlay-chat");
             overlay.style.opacity = "1";
 
             // Sumindo com os botoes
             this.mobileControl!.style.display = 'none'
+
+            this.bubbleChat!.style.display = 'none'
         });
+
+        document.querySelector(".closeOverlay")?.addEventListener("click", () => {
+            // Sumindo com os botoes
+            this.mobileControl!.style.display = 'flex'
+
+            this.bubbleChat!.style.display = 'flex'
+        })
 
         this.recepcionist = new Recepcionist({
             scene: this,
