@@ -286,6 +286,24 @@ footer{
     display: none;
 }
 
+#red-button{
+    position: absolute;
+    bottom: 100px;
+    width: 100px;
+    left: 0;
+    padding: 0 15px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+
+    display: none;
+}
+
+#imgbtnredd{
+    width: 100%;
+}
+
 .right{
     display: flex;
     flex-direction: column;

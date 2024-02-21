@@ -37,7 +37,7 @@ export default class Demo extends Phaser.Scene {
     camera: any
 
     popup = document.getElementById("help-bubble")
-
+    btnred = document.getElementById("red-button")
     // rh
     text = document.getElementById("dialog-mensagem")
     bubbleChat = document.getElementById("dialog-container")
@@ -188,10 +188,13 @@ export default class Demo extends Phaser.Scene {
         });
 
         document.querySelector(".closeOverlay")?.addEventListener("click", () => {
+            if (this.mobile.matches) {
             // Sumindo com os botoes
             this.mobileControl!.style.display = 'flex'
+            this.btnred!.style.display = "flex" // o help bubble volta
 
             this.bubbleChat!.style.display = 'flex'
+            }
         })
 
         this.recepcionist = new Recepcionist({
@@ -527,6 +530,18 @@ export default class Demo extends Phaser.Scene {
             }
         }
 
+        //Adicionando o click no botao x para abrir o chat:
+          // Captura da tecla X
+          const actionKey = this.input.keyboard.addKey("X");
+
+          // Função para ativar a tecla X quando o botão vermelho for clicado
+          const ativarTeclaX = () => {
+              actionKey.isDown = true; // Ativa a tecla X do teclado
+          };
+  
+          // Adiciona um evento de clique ao botão vermelho para chamar a função
+          this.btnred?.addEventListener('click', ativarTeclaX);
+
         if (this.input.keyboard.checkDown(this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.ESC))) {
             this.dialogo.esconderCaixa()
         }
@@ -567,6 +582,10 @@ export default class Demo extends Phaser.Scene {
 
             this.popup!.style.display = "none" // o help bubble sai
             this.bubbleChat!.style.display = "none" // bubbleChat sai
+            
+            if (this.mobile.matches) {
+                this.btnred!.style.display = "none" // o help bubble sai
+            }
         }
 
         if (embedded) {
@@ -575,11 +594,14 @@ export default class Demo extends Phaser.Scene {
 
             this.popup!.style.opacity = "1" // o help bubble aparece
 
+            if (this.mobile.matches) {
+            this.btnred!.style.opacity = "1" // o help bubble aparece
+            }
 
             // o help bubble se ajuste no mobile
             if (this.mobile.matches) {
                 var helpText = document.getElementById("help-text")
-                helpText!.innerHTML = "Toque na Maria para interagir."
+                helpText!.innerHTML = "Toque no botão 💬 para interagir com Maria."
             }
 
 
@@ -588,9 +610,14 @@ export default class Demo extends Phaser.Scene {
         }
         else if (!embedded) {
             this.popup!.style.opacity = "0" // o help bubble some
+            
             this.bubbleChat!.style.opacity = "0" // bubbleChat some
             this.popup!.style.display = "flex" // o help bubble volta
             this.bubbleChat!.style.display = "flex" // bubbleChat volta
+            if (this.mobile.matches) {
+                this.btnred!.style.display = "flex" // o help bubble volta
+                this.btnred!.style.opacity = "0" // o help bubble some
+            }
         }
 
         if (embedded_reception) {
